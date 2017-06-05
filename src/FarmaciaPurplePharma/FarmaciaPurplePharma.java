@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package farmaciaucupharma;
+package FarmaciaPurplePharma;
 
 import java.util.ArrayList;
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ import java.text.*;
  * @author Lithium582
  */
 
-public class FarmaciaUCUPharma {
+public class FarmaciaPurplePharma {
 /*
     DateFormat d = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     Calendar cal = Calendar.getInstance();
