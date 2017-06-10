@@ -1,5 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Clases;
 
 import java.util.LinkedList;
+import Interfaces.*;
+
+/**
+ *
+ * @param <T> Tipo del nodo
+ * @author Lithium582
+ */
 
 public class TNodoAB<T> implements INodoAB<T> {
 
@@ -83,11 +96,11 @@ public class TNodoAB<T> implements INodoAB<T> {
         StringBuilder tempStr = new StringBuilder();
         if (hijoIzq != null) {
             tempStr.append(getHijoIzq().inOrden());
-            tempStr.append(TArbolBB.SEPARADOR_ELEMENTOS_IMPRESOS);
+            tempStr.append("-");
         }
         tempStr.append(imprimir());
         if (hijoDer != null) {
-            tempStr.append(TArbolBB.SEPARADOR_ELEMENTOS_IMPRESOS);
+            tempStr.append("-");
             tempStr.append(getHijoDer().inOrden());
         }
 
@@ -125,7 +138,7 @@ public class TNodoAB<T> implements INodoAB<T> {
     }
 
     @Override
-    public void setHijoIzq(INodoAB elemento) {
+    public void setHijoIzq(INodoAB<T> elemento) {
         this.hijoIzq = elemento;
 
     }

@@ -204,7 +204,7 @@ public class Farmacia implements IFarmacia {
             while (aux != null) {
                 String nom = aux.getObjeto().getDescripcion().toLowerCase();
                 if (nom.contains(pDescripcion.toLowerCase())) {
-                    cadenaRetorno += aux.getObjeto().toString("-") + "\n";
+                    cadenaRetorno += aux.getObjeto().toString() + "\n";
                 }
                 aux = aux.getSiguiente();
             }
@@ -224,7 +224,7 @@ public class Farmacia implements IFarmacia {
             while (aux != null) {
                 String nom = aux.getObjeto().getNombre().toLowerCase();
                 if (nom.contains(pNombre.toLowerCase())) {
-                    cadenaRetorno += aux.getObjeto().toString("-") + "\n";
+                    cadenaRetorno += aux.getObjeto().toString() + "\n";
                 }
                 aux = aux.getSiguiente();
             }
@@ -236,21 +236,21 @@ public class Farmacia implements IFarmacia {
     public Boolean InsertarArticulo(IArticulo pArticulo) {
         Nodo<IArticulo> _nodo = new Nodo<IArticulo>(pArticulo,pArticulo.getID());
         
-        INodo buscado = listaArticulos.Buscar(pArticulo.getID());
+        INodo<IArticulo> buscado = listaArticulos.Buscar(pArticulo.getID());
         if(buscado == null){
             this.listaArticulos.Insertar(_nodo);
         }else{
-            IColeccionable obj = buscado.getObjeto();
+            IArticulo obj = buscado.getObjeto();
             
             if (obj.getClass().getName() == "Articulo"){
-                ((Articulo)obj).setDescripcion(pArticulo.getDescripcion());
-                ((Articulo)obj).setEstado(pArticulo.getEstado());
-                ((Articulo)obj).setFechaActualizacion(Calendar.getInstance().getTime());
-                ((Articulo)obj).setNombre(pArticulo.getNombre());
-                ((Articulo)obj).setPrecio(pArticulo.getPrecio());
-                ((Articulo)obj).setReceta(pArticulo.getReceta());
-                ((Articulo)obj).setRefrigerado(pArticulo.getRefrigerado());
-                ((Articulo)obj).setStock(pArticulo.getStock());
+                obj.setDescripcion(pArticulo.getDescripcion());
+                obj.setEstado(pArticulo.getEstado());
+                obj.setFechaActualizacion(Calendar.getInstance().getTime());
+                obj.setNombre(pArticulo.getNombre());
+                obj.setPrecio(pArticulo.getPrecio());
+                obj.setReceta(pArticulo.getReceta());
+                obj.setRefrigerado(pArticulo.getRefrigerado());
+                obj.setStock(pArticulo.getStock());
             }
         }
         
@@ -359,7 +359,7 @@ public class Farmacia implements IFarmacia {
                 Long fVenta = fechaVenta.getTime();
                 
                 if (longFComienzo <= fVenta && longFFin >= fVenta) {
-                    cadenaRetorno += aux.getObjeto().toString("-") + "\n";
+                    cadenaRetorno += aux.getObjeto().toString() + "\n";
                 }
                 aux = aux.getSiguiente();
             }

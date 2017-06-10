@@ -171,7 +171,7 @@ public class FarmaciaPurplePharma {
                                         System.out.println("Artículo inexistente");
                                     }
                                     else{
-                                        System.out.println(a.toString("-"));
+                                        System.out.println(a.toString());
                                     }
                                     
                                     break;
@@ -241,7 +241,7 @@ public class FarmaciaPurplePharma {
                         }
                         else{
                             System.out.println("Artículo encontrado");
-                            System.out.println(objArticulo.toString("-"));
+                            System.out.println(objArticulo.toString());
                             System.out.println("Ingrese la cantidad de artículos que quiere vender");
                             Integer intCantidad = Integer.parseInt(br.readLine());
                             Integer stock = objArticulo.getStock();

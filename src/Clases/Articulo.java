@@ -163,20 +163,20 @@ public class Articulo implements IArticulo {
     //</ editor-fold>
 
     // <editor-fold defaultstate="extended" desc="Funciones y Métodos">
-    public String toString(String pSeparador) {
+    public String toString() {
         String cadenaRetorno = this.getID().toString();
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Nombre: " + this.getNombre();
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Descripción: " + this.getDescripcion();
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Precio: " + this.getPrecio();
+        cadenaRetorno += " - " + "Nombre: " + this.getNombre();
+        cadenaRetorno += " - " + "Descripción: " + this.getDescripcion();
+        cadenaRetorno += " - " + "Precio: " + this.getPrecio();
         if (this.getEstado() == null){
-            cadenaRetorno += " " + pSeparador.trim() + " " + "Estado: NULL";
+            cadenaRetorno += " - " + "Estado: NULL";
         }
         else{
-            cadenaRetorno += " " + pSeparador.trim() + " " + "Estado: " + (this.getEstado() == true ? "Activo" : "Inactivo");
+            cadenaRetorno += " - " + "Estado: " + (this.getEstado() == true ? "Activo" : "Inactivo");
         }
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Refrigerado: " + (this.getRefrigerado() == true ? "Si" : "No");
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Recetado: " + (this.getReceta() == true ? "Si" : "No");
-        cadenaRetorno += " " + pSeparador.trim() + " " + "Stock: " + (this.getStock());
+        cadenaRetorno += " - " + "Refrigerado: " + (this.getRefrigerado() == true ? "Si" : "No");
+        cadenaRetorno += " - " + "Recetado: " + (this.getReceta() == true ? "Si" : "No");
+        cadenaRetorno += " - " + "Stock: " + (this.getStock());
         
         return cadenaRetorno;
     }

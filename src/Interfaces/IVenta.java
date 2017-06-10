@@ -11,7 +11,14 @@ import java.util.Date;
  *
  * @author Lithium582
  */
-public interface IVenta extends IColeccionable{
+public interface IVenta{
+        
+    /**
+     * Devuelve el ID de la venta
+     * @return
+     */
+    public Integer getID();
+    
     /**
      * Devuelve la Fecha de Realizada la venta
      * @return

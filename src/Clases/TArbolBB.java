@@ -1,14 +1,20 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Clases;
+import Interfaces.*;
 import java.util.LinkedList;
 
+/**
+ *
+ * @param <T> Tipo del árbol
+ * @author Lithium582
+ */
 public class TArbolBB<T> implements IArbolBB<T> {
 
     private INodoAB<T> raiz;
-
-    /**
-     * Separador utilizado entre elemento y elemento al imprimir la lista
-     */
-    public static final String SEPARADOR_ELEMENTOS_IMPRESOS = "-";
 
     public TArbolBB() {
         raiz = null;

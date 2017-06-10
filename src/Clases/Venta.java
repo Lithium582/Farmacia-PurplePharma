@@ -79,10 +79,10 @@ public class Venta implements IVenta {
             String fecha = "";
             
             String cadenaRetorno = this.getID().toString();
-            cadenaRetorno += " " + pSeparador.trim() + " " + "Fecha: " + dt.format(this.GetFecha());
-            cadenaRetorno += " " + pSeparador.trim() + " " + "IDArticulo: " + this.GetIdArticulo();
-            cadenaRetorno += " " + pSeparador.trim() + " " + "Cantidad: " + this.GetCantidad();
-            cadenaRetorno += " " + pSeparador.trim() + " " + "Valor final de la Venta: " + this.GetValorFinal();
+            cadenaRetorno += " - " + "Fecha: " + dt.format(this.GetFecha());
+            cadenaRetorno += " - " + "IDArticulo: " + this.GetIdArticulo();
+            cadenaRetorno += " - " + "Cantidad: " + this.GetCantidad();
+            cadenaRetorno += " - " + "Valor final de la Venta: " + this.GetValorFinal();
 
             return cadenaRetorno;
         }

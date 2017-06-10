@@ -1,4 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Interfaces;
 
+/**
+ * @T tipo
+ * @author Lithium582
+**/
 import java.util.LinkedList;
 
 public interface INodoAB<T> {
@@ -27,16 +37,16 @@ public interface INodoAB<T> {
     /**
      * Asigna el hijo izquierdo del nodo.
      *
-     * @return Elemento a ser asignado como hijo izquierdo.
+     * @param elemento Nodo a insertar
      */
-    public void setHijoIzq(INodoAB elemento);
+    public void setHijoIzq(INodoAB<T> elemento);
 
     /**
      * Asigna el hijo derecho del nodo.
      *
-     * @return Elemento a ser asignado como hijo derecho.
+     * @param elemento Nodo a insertar
      */
-    public void setHijoDer(INodoAB elemento);
+    public void setHijoDer(INodoAB<T> elemento);
 
     /**
      * Busca un elemento dentro del arbol con la etiqueta indicada.

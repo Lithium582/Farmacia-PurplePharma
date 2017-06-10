@@ -11,7 +11,14 @@ import java.util.Date;
  *
  * @author Lithium582
  */
-public interface IArticulo extends IColeccionable {
+public interface IArticulo {
+    
+    /**
+     * Devuelve el ID del Articulo
+     * @return
+     */
+    public Integer getID();
+    
     /**
      * Devuelve la Fecha de Creación del Articulo
      * @return
@@ -119,4 +126,5 @@ public interface IArticulo extends IColeccionable {
      * @param value Valor.
      */
     public void setStock(Integer value);
+    
 }

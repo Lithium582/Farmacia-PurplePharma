@@ -6,10 +6,10 @@
 package Interfaces;
 
 /**
- * @T tipo
+ * @param <T> Tipo del nodo
  * @author Lithium582
 **/
-public interface INodo<T extends IColeccionable> {
+public interface INodo<T> {
    /**
      * Retorna el dato contenido en el nodo.
      *

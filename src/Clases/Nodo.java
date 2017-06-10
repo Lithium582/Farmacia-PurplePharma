@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author Lithium582
  */
-public class Nodo<T extends IColeccionable> implements INodo<T> {
+public class Nodo<T> implements INodo<T> {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
     private Integer etiqueta;

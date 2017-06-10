@@ -7,11 +7,11 @@ package Clases;
 
 import Interfaces.*;
 /**
- * @param T tipo de la lista 
+ * @param <T> Tipo de la lista
  * @author Lithium582
  */
 
-public class Lista<T extends IColeccionable> implements ILista<T> {
+public class Lista<T> implements ILista<T> {
 
     private INodo<T> primero;
 
@@ -139,9 +139,9 @@ public class Lista<T extends IColeccionable> implements ILista<T> {
             return "";
         } else {
             INodo<T> temp = primero;
-            aux = temp.getObjeto().toString(pSeparador);
+            aux = temp.getObjeto().toString();
             while (temp.getSiguiente() != null) {
-                aux += "\n" + temp.getSiguiente().getObjeto().toString(pSeparador);
+                aux += "\n" + temp.getSiguiente().getObjeto().toString();
                 temp = temp.getSiguiente();
             }
 
