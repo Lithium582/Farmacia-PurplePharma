@@ -12,9 +12,12 @@ import java.util.Objects;
  * @author Lithium582
  */
 public class Nodo<T extends IColeccionable> implements INodo<T> {
+    
+    // <editor-fold defaultstate="extended" desc="Atributos">
     private Integer etiqueta;
     private T objeto;
     private Nodo<T> siguiente;
+    // </editor-fold>
     
     public Nodo(T objeto, Integer etiqueta) {
         this.objeto = objeto;
