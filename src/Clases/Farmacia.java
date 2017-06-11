@@ -218,22 +218,20 @@ public class Farmacia implements IFarmacia {
     //No implementado
     @Override
     public String buscarXDescripcion(String pDescripcion) {
-        String cadenaRetorno = "LOL";
-//        if (listaArticulos.esVacia()) {
-//            return "";
-//        } else {
-//            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
-//            
-//            INodoLista<IArbol<IArticulo>> aux = listaArticulos.getPrimero();
-//            while (aux != null) {
-//                String nom = aux.getObjeto().getDescripcion().toLowerCase();
-//                if (nom.contains(pDescripcion.toLowerCase())) {
-//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-//                }
-//                aux = aux.getSiguiente();
-//            }
-//        }
-        return cadenaRetorno;
+        if (listaArticulos.esVacia()) {
+            return "";
+       }
+       else {
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            String str = "";
+            while(nodoActual != null){
+                str += nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return str;
+       }
     }
     
     //No implementado
@@ -401,6 +399,7 @@ public class Farmacia implements IFarmacia {
         return "Lista aún no inicializado";
     }
     
+    //Sin implementar
     @Override
     public String ListadoVenta(Date pFechaComienzo, Date pFechaFin) {
         String cadenaRetorno = "LOL";

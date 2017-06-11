@@ -13,6 +13,7 @@ import java.util.*;
 import java.time.*;
 import Clases.*;
 import Interfaces.*;
+import java.lang.reflect.Field;
 import java.text.*;
 
 /**
@@ -32,15 +33,48 @@ public class FarmaciaPurplePharma {
     **/
     public static void main(String[] args) {
         try{
-            Ventana v = new Ventana();
-            v.show();
+//            Ventana v = new Ventana();
+//            v.show();
             
             Farmacia farma = new Farmacia("UCUPharma","Wall Street 1929","666-666-6666");
             // TODO code application logic here
-            
+//            
+//            ///////////////////////////////////////////////////////////////////////////////
+//            Class c = farma.getClass();
+//
+//            Field f = c.getDeclaredField("direccion");
+//            f.setAccessible(true);
+//
+//            String valueOfMyColor = (String) f.get(farma);
+//            
+//            System.out.println(valueOfMyColor);
+//            BufferedReader bra = new BufferedReader(new InputStreamReader(System.in));
+//            bra.readLine();
+//            ///////////////////////////////////////////////////////////////////////////////
+
             Integer op = -1;
             Boolean b = false;
+            SimpleDateFormat dta = new SimpleDateFormat("dd-MM-yyyy");
+            
+            IArticulo aa = new Articulo(1,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Des",true,true,true);
+            IArticulo ab = new Articulo(2,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Des",true,true,true);
+            IArticulo ac = new Articulo(6,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Algo",true,true,true);
+            
+            INodoArbol<IArticulo> nodo = new NodoArbol<IArticulo>(1,aa);
+            INodoArbol<IArticulo> nodo2 = new NodoArbol<IArticulo>(2,ab);
+            INodoArbol<IArticulo> nodo3 = new NodoArbol<IArticulo>(6,ac);
+            
+            IArbol<IArticulo> arbol = new Arbol<IArticulo>(nodo);
+            arbol.insertar(nodo2);
+            arbol.insertar(nodo3);
+            
+            String strA = arbol.buscarXAtributo("descripcion", "De");
+            
+            System.out.println(strA);
 
+            BufferedReader bra = new BufferedReader(new InputStreamReader(System.in));
+            bra.readLine();
+            
             while(op != 0){
                 try{
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -358,7 +392,7 @@ public class FarmaciaPurplePharma {
             
         }
             catch(Exception ex){
-                System.out.println("El sistema se ha detenido para evitar una explosión de su equipo");
+                System.out.println("El sistema se ha detenido para evitar una explosión de su equipo \n Para más información, contacte al 0993141592");
             }
     }
 }

@@ -33,6 +33,16 @@ public interface IArbol<T> {
     public INodoArbol<T> buscar(Comparable pEtiqueta);
     
     /**
+     * Busca un elemento por el atributo recibido por parámetro
+     *
+     * @param pEtiqueta ID del elemento que se quiere buscar
+     * @param pAttr Nombre del atributo de la clase por el cual debe buscar
+     * @return Nodo con la etiqueta buscada o null si no existe
+     */
+    public String buscarXAtributo(String pAttr, String pEtiqueta);
+    
+    
+    /**
      * Elimina un elemento dada una etiqueta.
      * 
      * @param pEtiqueta ID del elemento que se quiere eliminar

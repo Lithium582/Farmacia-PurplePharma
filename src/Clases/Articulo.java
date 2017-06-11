@@ -178,7 +178,7 @@ public class Articulo implements IArticulo {
         cadenaRetorno += " - " + "Recetado: " + (this.getReceta() == true ? "Si" : "No");
         cadenaRetorno += " - " + "Stock: " + (this.getStock());
         
-        return cadenaRetorno;
+        return cadenaRetorno + "\n";
     }
     // </editor-fold>
 }

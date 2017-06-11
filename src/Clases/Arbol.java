@@ -54,6 +54,14 @@ public class Arbol<T> implements IArbol<T> {
             return raiz.buscar(pEtiqueta);
         }
     }
+    
+    public String buscarXAtributo(String pAttr, String pEtiqueta){
+        if (esVacio()){
+            return "";
+        }else{
+            return raiz.buscarXAtributo(pAttr, pEtiqueta);
+        }
+    }
 
     @Override
     public String inOrden() {

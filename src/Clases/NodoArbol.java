@@ -5,8 +5,8 @@
  */
 package Clases;
 
-import java.util.LinkedList;
 import Interfaces.*;
+import java.lang.reflect.Field;
 
 /**
  *
@@ -113,6 +113,40 @@ public class NodoArbol<T> implements INodoArbol<T> {
             return getHijoDer().buscar(unaEtiqueta);
         } else {
             return null;
+        }
+    }
+    
+    public String buscarXAtributo(String pAttr, String pEtiqueta){
+        try{
+            String strReturn = "";
+            Class c = this.datos.getClass();
+            Field f;
+            
+            try{
+                f = c.getDeclaredField(pAttr);
+            }
+            catch(Exception ex){
+                return "";
+            }
+            
+            f.setAccessible(true);
+            String val = (String) f.get(this.datos);
+
+            if (val.contains(pEtiqueta)) {
+                strReturn += this.datos.toString();
+            }
+            
+            if (hijoIzq != null) {
+                strReturn += getHijoIzq().buscarXAtributo(pAttr, pEtiqueta);
+            }
+            
+            if (hijoDer != null) {
+                strReturn += getHijoDer().buscarXAtributo(pAttr, pEtiqueta);
+            } 
+            
+            return strReturn;
+        }catch(Exception ex){
+            return "";
         }
     }
 

@@ -13,12 +13,20 @@ import static org.junit.Assert.*;
  * @author Lithium582
  */
 public class ArbolTest {
+    Arbol<Articulo> objArbol;
     
     public ArbolTest() {
+        objArbol = new Arbol();
+        objArbol.insertar(new NodoArbol<Articulo>(3,new Articulo()));
+        objArbol.insertar(new NodoArbol<Articulo>(4,new Articulo()));
+        objArbol.insertar(new NodoArbol<Articulo>(10,new Articulo()));
+        objArbol.insertar(new NodoArbol<Articulo>(12,new Articulo()));
+        objArbol.insertar(new NodoArbol<Articulo>(16,new Articulo()));
     }
 
     @Test
     public void testGetRaiz() {
+        
     }
 
     @Test
@@ -31,6 +39,8 @@ public class ArbolTest {
 
     @Test
     public void testInOrden() {
+        System.out.println("Test InOrden");
+        assertEquals("Test Inorden", "3-4-10-12-16",objArbol.inOrden());
     }
 
     @Test
