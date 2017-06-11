@@ -104,5 +104,13 @@ public class FarmaciaTest {
     @Test
     public void testFormatoFecha() throws Exception {
     }
+
+    @Test
+    public void testBuscarArticuloXID() {
+    }
+
+    @Test
+    public void testGetCompras() {
+    }
     
 }

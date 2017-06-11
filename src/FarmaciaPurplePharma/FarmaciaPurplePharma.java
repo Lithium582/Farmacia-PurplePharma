@@ -32,8 +32,8 @@ public class FarmaciaPurplePharma {
     **/
     public static void main(String[] args) {
         try{
-            //Ventana v = new Ventana();
-            //v.show();
+            Ventana v = new Ventana();
+            v.show();
             
             Farmacia farma = new Farmacia("UCUPharma","Wall Street 1929","666-666-6666");
             // TODO code application logic here
@@ -134,8 +134,11 @@ public class FarmaciaPurplePharma {
                             Date pFechaCreacion = Calendar.getInstance().getTime();
                             Date pFechaActualizacion = Calendar.getInstance().getTime();
 
+                            System.out.println("Ingrese el área del artículo");
+                            String pArea = br.readLine().trim();
+                            
                             Articulo objArticulo = new Articulo(pID,pFechaCreacion,pFechaActualizacion,pPrecio,pNombre,pDescripcion,true,pRefrigeracion,pReceta);
-                            if (farma.InsertarArticulo(objArticulo)){
+                            if (farma.InsertarArticulo(objArticulo, pArea)){
                                 System.out.println("Artículo ingresado con éxito");
                             }
                         }
@@ -168,7 +171,7 @@ public class FarmaciaPurplePharma {
                                     System.out.println("Ingrese el ID del producto buscado");
                                     Integer idBusqueda = Integer.parseInt(br.readLine());
                                     
-                                    IArticulo a = farma.BuscarXID(idBusqueda);
+                                    IArticulo a = farma.BuscarArticuloXID(idBusqueda);
                                     
                                     if (a == null){
                                         System.out.println("Artículo inexistente");
@@ -234,7 +237,7 @@ public class FarmaciaPurplePharma {
                         System.out.println("Ingrese el ID del producto a vender");
                         Integer idBuscar = Integer.parseInt(br.readLine());
                         
-                        IArticulo objArticulo = farma.BuscarXID(idBuscar);
+                        IArticulo objArticulo = farma.BuscarArticuloXID(idBuscar);
                         
                         if (objArticulo == null){
                             System.out.println("El artículo no se ha podido encontrar");
@@ -260,7 +263,7 @@ public class FarmaciaPurplePharma {
                             
                             Movimiento objVenta = new Movimiento(objArticulo,intCantidad);
                             
-                            if(farma.GuardarVenta(objVenta)){
+                            if(farma.GuardarVenta(objVenta,"")){
                                 System.out.println("Venta N° " + objVenta.getID().toString() + " realizada con éxito\nUCUPharma agradece su compra :D");
                             }else{
                                 System.out.println("No ha podido realizarse la venta");

@@ -75,7 +75,7 @@ public interface IFarmacia {
      * @param id ID del Artículo a buscar.
      * @return Artículo encontrado.
      */
-    public IArticulo BuscarXID(Comparable id);
+    public IArticulo BuscarArticuloXID(Comparable id);
 
     /**
      * Busca un Artículo por su descripción.
@@ -119,7 +119,7 @@ public interface IFarmacia {
      * @param pVenta Venta realizada
      * @return Venta realizada con éxito
      */
-    public Boolean GuardarVenta(IMovimiento pVenta);
+    public Boolean GuardarVenta(IMovimiento pVenta, Comparable pArea);
 
     /**
      * Agrega stock a un producto existente.

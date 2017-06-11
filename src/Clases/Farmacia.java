@@ -166,7 +166,7 @@ public class Farmacia implements IFarmacia {
             if (linea.length == 2){
                 Integer idArticulo = Integer.parseInt(linea[0].trim());
                 Integer stock = Integer.parseInt(linea[1].trim());
-                IArticulo objArticulo = BuscarXID(idArticulo);
+                IArticulo objArticulo = BuscarArticuloXID(idArticulo);
                 
                 if(objArticulo != null){
                     Integer stockActual = objArticulo.getStock();
@@ -193,7 +193,7 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public IArticulo BuscarXID(Comparable pId) {
+    public IArticulo BuscarArticuloXID(Comparable pId) {
        if (listaArticulos.esVacia()) {
             return null;
        }
@@ -218,42 +218,42 @@ public class Farmacia implements IFarmacia {
     //No implementado
     @Override
     public String buscarXDescripcion(String pDescripcion) {
-        String cadenaRetorno = "";
-        if (listaArticulos.esVacia()) {
-            return "";
-        } else {
-            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
-            
-            INodoLista<IArbol<IArticulo>> aux = listaArticulos.getPrimero();
-            while (aux != null) {
-                String nom = aux.getObjeto().getDescripcion().toLowerCase();
-                if (nom.contains(pDescripcion.toLowerCase())) {
-                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-                }
-                aux = aux.getSiguiente();
-            }
-        }
+        String cadenaRetorno = "LOL";
+//        if (listaArticulos.esVacia()) {
+//            return "";
+//        } else {
+//            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
+//            
+//            INodoLista<IArbol<IArticulo>> aux = listaArticulos.getPrimero();
+//            while (aux != null) {
+//                String nom = aux.getObjeto().getDescripcion().toLowerCase();
+//                if (nom.contains(pDescripcion.toLowerCase())) {
+//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
+//                }
+//                aux = aux.getSiguiente();
+//            }
+//        }
         return cadenaRetorno;
     }
     
     //No implementado
     @Override
     public String buscarXNombre(String pNombre) {
-        String cadenaRetorno = "";
-        if (listaArticulos.esVacia()) {
-            return "";
-        } else {
-            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
-            
-            INodoLista<IArticulo> aux = listaArticulos.getPrimero();
-            while (aux != null) {
-                String nom = aux.getObjeto().getNombre().toLowerCase();
-                if (nom.contains(pNombre.toLowerCase())) {
-                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-                }
-                aux = aux.getSiguiente();
-            }
-        }
+        String cadenaRetorno = "LOL";
+//        if (listaArticulos.esVacia()) {
+//            return "";
+//        } else {
+//            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
+//            
+//            INodoLista<IArticulo> aux = listaArticulos.getPrimero();
+//            while (aux != null) {
+//                String nom = aux.getObjeto().getNombre().toLowerCase();
+//                if (nom.contains(pNombre.toLowerCase())) {
+//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
+//                }
+//                aux = aux.getSiguiente();
+//            }
+//        }
         return cadenaRetorno;
     }
 
@@ -321,43 +321,56 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public Boolean GuardarVenta(IMovimiento pVenta) {
-        NodoLista<IMovimiento> pNodo = new NodoLista<IMovimiento>(pVenta, pVenta.getID());
+    public Boolean GuardarVenta(IMovimiento pVenta, Comparable pArea) {
+        INodoArbol<IMovimiento> objNodo = new NodoArbol<IMovimiento>(pVenta.getID(), pVenta);
+        INodoLista<IArbol<IMovimiento>> objNodoLista = this.listaVentas.Buscar(pArea);
         
-        listaVentas.Insertar(pNodo);
-        
-        return true;
+        if (objNodoLista == null){
+            IArbol<IMovimiento> objNuevoArbol = new Arbol<IMovimiento>(objNodo);
+            
+            objNodoLista = new NodoLista<IArbol<IMovimiento>>(objNuevoArbol, pArea);
+            
+            this.listaVentas.Insertar(objNodoLista);
+            
+            return true;
+        }else{
+            return objNodoLista.getObjeto().insertar(objNodo);
+        }
     }
 
     @Override
-    public Boolean ReintegroVenta(Integer pIdVenta) {
-        INodoLista<IMovimiento> nodoVenta = listaVentas.Buscar(pIdVenta);
-        if (nodoVenta == null){
-            return false;
-        }
-        
-        IMovimiento objVenta = nodoVenta.getObjeto();
-        
-        if (objVenta == null){
-            return false;
-        }
-        else{
-            INodoLista<IArticulo> nodoArticulo = listaArticulos.Buscar(objVenta.GetIdArticulo());
+    public Boolean ReintegroVenta(Comparable pIdVenta) {
+        if (listaVentas.esVacia()) {
+            return null;
+       }
+       else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
             
-            if (nodoArticulo == null){
-                return false;
+            while(nodoActual != null){
+                INodoArbol<IMovimiento> nodoArbol = nodoActual.getObjeto().buscar(pIdVenta);
+                
+                if(nodoArbol != null){
+                    IMovimiento ventaBuscada = nodoArbol.getDatos();
+                    
+                    IArticulo objArticuloBuscado = BuscarArticuloXID(ventaBuscada.GetIdArticulo());
+                    
+                    if (objArticuloBuscado == null){
+                        return false;
+                    }
+                    
+                    Integer stockActual = objArticuloBuscado.getStock();
+                    Integer stockVendido = ventaBuscada.GetCantidad();
+                    objArticuloBuscado.setStock(stockActual + stockVendido);
+                    
+                    nodoActual.getObjeto().eliminar(pIdVenta);
+                    
+                    return true;
+                }
+                nodoActual = nodoActual.getSiguiente();
             }
-            
-            IArticulo objArticulo = nodoArticulo.getObjeto();
-            Integer stockActual = objArticulo.getStock();
-            Integer stockVendido = objVenta.GetCantidad();
-            objArticulo.setStock(stockActual + stockVendido);
-            
-            listaVentas.Borrar(pIdVenta);
-            
-        }
+       }
         
-        return true;
+        return false;
     }
 
     @Override
@@ -387,27 +400,27 @@ public class Farmacia implements IFarmacia {
         
         return "Lista aún no inicializado";
     }
-
+    
     @Override
     public String ListadoVenta(Date pFechaComienzo, Date pFechaFin) {
-        String cadenaRetorno = "";
-        if (listaVentas.esVacia()) {
-            return "";
-        } else {
-            
-            INodoLista<IMovimiento> aux = listaVentas.getPrimero();
-            while (aux != null) {
-                Date fechaVenta = aux.getObjeto().GetFecha();
-                Long longFComienzo = pFechaComienzo.getTime();
-                Long longFFin = pFechaFin.getTime();
-                Long fVenta = fechaVenta.getTime();
-                
-                if (longFComienzo <= fVenta && longFFin >= fVenta) {
-                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-                }
-                aux = aux.getSiguiente();
-            }
-        }
+        String cadenaRetorno = "LOL";
+//        if (listaVentas.esVacia()) {
+//            return "";
+//        } else {
+//            
+//            INodoLista<IMovimiento> aux = listaVentas.getPrimero();
+//            while (aux != null) {
+//                Date fechaVenta = aux.getObjeto().GetFecha();
+//                Long longFComienzo = pFechaComienzo.getTime();
+//                Long longFFin = pFechaFin.getTime();
+//                Long fVenta = fechaVenta.getTime();
+//                
+//                if (longFComienzo <= fVenta && longFFin >= fVenta) {
+//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
+//                }
+//                aux = aux.getSiguiente();
+//            }
+//        }
         return cadenaRetorno;
     }
     
@@ -482,5 +495,10 @@ public class Farmacia implements IFarmacia {
        }
     
     //</editor-fold>
+
+    @Override
+    public Lista<IArbol<IMovimiento>> getCompras() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  
 }

@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
  * @author Lithium582
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({VentaTest.class, ListaTest.class, TArbolBBTest.class, TNodoABTest.class, ArticuloTest.class, FarmaciaTest.class, ManejadorArchivosGenericoTest.class, NodoTest.class})
+@Suite.SuiteClasses({ListaTest.class, ArbolTest.class, NodoArbolTest.class, ArticuloTest.class, FarmaciaTest.class, ManejadorArchivosGenericoTest.class, NodoListaTest.class, MovimientoTest.class})
 public class ClasesSuite {
     
 }

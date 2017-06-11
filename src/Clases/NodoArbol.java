@@ -83,7 +83,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
             }
         } else if (unElemento.getEtiqueta().compareTo(this.etiqueta) > 0) {
             if (this.hijoDer != null) {
-                return getHijoDer().insertar(unElemento);
+                return this.hijoDer.insertar(unElemento);
             } else {
                 this.hijoDer = unElemento;
                 return true;
@@ -139,53 +139,105 @@ public class NodoArbol<T> implements INodoArbol<T> {
         return (etiqueta.toString());
     }
     
-   @Override
-    public INodoArbol<T> eliminar(Comparable pEtiqueta) {
-        if (pEtiqueta.compareTo(this.getEtiqueta()) < 0) {
-            if (this.hijoIzq != null) {
-                this.hijoIzq = hijoIzq.eliminar(pEtiqueta);
+    public INodoArbol eliminar(Comparable unaClave){
+        if (unaClave.compareTo(this.getEtiqueta()) < 0){
+            if(this.hijoIzq != null){
+                this.hijoIzq = hijoIzq.eliminar(unaClave);
             }
+            
             return this;
         }
-
-        if (pEtiqueta.compareTo(this.getEtiqueta()) > 0) {
-            if (this.hijoDer != null) {
-                this.hijoDer = hijoDer.eliminar(pEtiqueta);
-
+        
+        if (unaClave.compareTo(this.getEtiqueta()) > 0){
+            if (this.hijoDer != null){
+                this.hijoDer = hijoDer.eliminar(unaClave);
             }
+            
             return this;
         }
-
-        return quitaElNodo();
+        
+        return quitarNodo();
     }
     
-    private INodoArbol quitaElNodo() {
-        if (hijoIzq == null) {    // solo tiene un hijo o es hoja
-            return hijoDer;
+    public INodoArbol quitarNodo(){
+        INodoArbol elHijo = null;
+        INodoArbol elPadre = null;
+        
+        if (this.hijoIzq == null){  //Le falta el hijo izquierdo o es hoja
+            return this.hijoDer;    //Puede retornar un nulo
         }
-
-        if (hijoDer == null) { // solo tiene un hijo o es hoja
-            return hijoIzq;
+        
+        if (this.hijoDer == null){
+            return this.hijoIzq;    //Le falta el hijo derecho
         }
-// tiene los dos hijos, buscamos el lexicograficamente anterior
-        INodoArbol elHijo = hijoIzq;
-        INodoArbol elPadre = this;
-
-        while (elHijo.getHijoDer() != null) {
+        
+        elHijo = (INodoArbol)this.hijoIzq; //Va al subárbol izquierdo
+        elPadre = (INodoArbol)this;
+        
+        while(elHijo.getHijoDer() != null){
             elPadre = elHijo;
-            elHijo = elHijo.getHijoDer();
-        }
-
-        if (elPadre != this) {
+            elHijo = (INodoArbol)elHijo.getHijoDer();
+        }                                   //El hijo es el más a la derecha del subárbol izquierdo
+        
+        if(elPadre != this){
             elPadre.setHijoDer(elHijo.getHijoIzq());
             elHijo.setHijoIzq(hijoIzq);
         }
-
-        elHijo.setHijoDer(hijoDer);
-        setHijoIzq(null);  // para que no queden referencias y ayudar al collector
-        setHijoDer(null);
-        return elHijo;
+        
+        elHijo.setHijoDer(this.hijoDer);
+        hijoDer = null;
+        hijoIzq = null;
+        return elHijo;                  //ElHijo quedará en lugar de this
+        
     }
+//    
+//   @Override
+//    public INodoArbol<T> eliminar(Comparable pEtiqueta) {
+//        if (pEtiqueta.compareTo(this.getEtiqueta()) < 0) {
+//            if (this.hijoIzq != null) {
+//                this.hijoIzq = hijoIzq.eliminar(pEtiqueta);
+//            }
+//            return this;
+//        }
+//
+//        if (pEtiqueta.compareTo(this.getEtiqueta()) > 0) {
+//            if (this.hijoDer != null) {
+//                this.hijoDer = hijoDer.eliminar(pEtiqueta);
+//
+//            }
+//            return this;
+//        }
+//
+//        return quitaElNodo();
+//    }
+//    
+//    private INodoArbol quitaElNodo() {
+//        if (hijoIzq == null) {    // solo tiene un hijo o es hoja
+//            return hijoDer;
+//        }
+//
+//        if (hijoDer == null) { // solo tiene un hijo o es hoja
+//            return hijoIzq;
+//        }
+//// tiene los dos hijos, buscamos el lexicograficamente anterior
+//        INodoArbol elHijo = hijoIzq;
+//        INodoArbol elPadre = this;
+//
+//        while (elHijo.getHijoDer() != null) {
+//            elPadre = elHijo;
+//            elHijo = elHijo.getHijoDer();
+//        }
+//
+//        if (elPadre != this) {
+//            elPadre.setHijoDer(elHijo.getHijoIzq());
+//            elHijo.setHijoIzq(hijoIzq);
+//        }
+//
+//        elHijo.setHijoDer(hijoDer);
+//        setHijoIzq(null);  // para que no queden referencias y ayudar al collector
+//        setHijoDer(null);
+//        return elHijo;
+//    }
 
  @Override
     public INodoArbol lexicoGraficamenteAnterior(Comparable pClave){
@@ -266,15 +318,15 @@ public class NodoArbol<T> implements INodoArbol<T> {
 
     @Override
     public int getTamano() {
-        int der = -1;
-        int izq = -1;
+        int der = 0;
+        int izq = 0;
         if (this.hijoIzq!= null) {
             izq = this.hijoIzq.getTamano();
         }
         if (this.hijoDer!= null) {
-            izq = this.hijoDer.getTamano();
+            der = this.hijoDer.getTamano();
         }
-        return (1 + + der + izq);
+        return (1 + der + izq);
     }
 
     @Override
