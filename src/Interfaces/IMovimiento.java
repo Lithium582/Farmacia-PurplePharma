@@ -11,13 +11,13 @@ import java.util.Date;
  *
  * @author Lithium582
  */
-public interface IVenta{
+public interface IMovimiento{
         
     /**
      * Devuelve el ID de la venta
      * @return
      */
-    public Integer getID();
+    public Comparable getID();
     
     /**
      * Devuelve la Fecha de Realizada la venta
@@ -29,13 +29,13 @@ public interface IVenta{
      * Devuelve la el ID del Artículo vendido
      * @return
      */
-    public Integer GetIdArticulo();
+    public Comparable GetIdArticulo();
     
     /**
      * Establece la ID del artículo vendido
      * @param value ID del artículo vendido
      */
-    public void SetIdArticulo(Integer value);
+    public void SetIdArticulo(Comparable value);
     
     /**
      * Devuelve la cantidad del artículo vendido

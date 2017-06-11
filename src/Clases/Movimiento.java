@@ -12,19 +12,19 @@ import java.util.*;
  *
  * @author Lithium582
  */
-public class Venta implements IVenta {
+public class Movimiento implements IMovimiento {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
         private static Integer ultimoIDGenerado = 0;
-        private Integer id;
+        private Comparable<Integer> id;
         private Date Fecha;
-        private Integer idArticulo;
+        private Comparable<Integer> idArticulo;
         private Integer cantidad;
         private Double valorFinal;
     // </editor-fold>
     
     // <editor-fold defaultstate="extended" desc="Propiedades">
-        public Integer getID(){
+        public Comparable getID(){
             return this.id;
         }
 
@@ -34,12 +34,12 @@ public class Venta implements IVenta {
         }
 
         @Override
-        public Integer GetIdArticulo() {
+        public Comparable GetIdArticulo() {
             return this.idArticulo;
         }
 
         @Override
-        public void SetIdArticulo(Integer value) {
+        public void SetIdArticulo(Comparable value) {
             this.idArticulo = value;
         }
 
@@ -60,12 +60,12 @@ public class Venta implements IVenta {
     // </editor-fold>
     
     //<editor-fold defaultstate="extended" desc="Constructores">
-        public Venta(){
+        public Movimiento(){
             
         }
         
-        public Venta(IArticulo pArticulo, Integer pCantidad){
-            this.id = ++Venta.ultimoIDGenerado;
+        public Movimiento(IArticulo pArticulo, Integer pCantidad){
+            this.id = ++Movimiento.ultimoIDGenerado;
             this.Fecha = Calendar.getInstance().getTime();
             this.idArticulo = pArticulo.getID();
             this.cantidad = pCantidad;

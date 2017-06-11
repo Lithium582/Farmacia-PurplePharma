@@ -8,18 +8,18 @@ import Interfaces.*;
 import java.util.Objects;
 
 /**
- *
+ * @param <T> tipo del nodo
  * @author Lithium582
  */
-public class Nodo<T> implements INodo<T> {
+public class NodoLista<T> implements INodoLista<T> {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
-    private Integer etiqueta;
+    private Comparable etiqueta;
     private T objeto;
-    private Nodo<T> siguiente;
+    private NodoLista<T> siguiente;
     // </editor-fold>
     
-    public Nodo(T objeto, Integer etiqueta) {
+    public NodoLista(T objeto, Comparable etiqueta) {
         this.objeto = objeto;
         this.etiqueta = etiqueta;
     }
@@ -35,12 +35,12 @@ public class Nodo<T> implements INodo<T> {
     }
 
     @Override
-    public void setSiguiente(INodo<T> pValue) {
-        this.siguiente = (Nodo<T>)pValue;
+    public void setSiguiente(INodoLista<T> pValue) {
+        this.siguiente = (NodoLista<T>)pValue;
     }
 
     @Override
-    public INodo<T> getSiguiente() {
+    public INodoLista<T> getSiguiente() {
         return this.siguiente;
     }
 
@@ -55,17 +55,17 @@ public class Nodo<T> implements INodo<T> {
     }
 
     @Override
-    public boolean equals(INodo<T> pNodo) {
+    public boolean equals(INodoLista<T> pNodo) {
         return Objects.equals(this.etiqueta, pNodo.getEtiqueta());
     }
 
     @Override
-    public Integer getEtiqueta() {
+    public Comparable getEtiqueta() {
         return this.etiqueta;
     }
 
     @Override
-    public Comparable compareTo(Integer etiqueta) {
+    public Comparable compareTo(Comparable etiqueta) {
         return this.getEtiqueta().compareTo(etiqueta);
     }
     

@@ -6,7 +6,7 @@
 package Interfaces;
 
 import java.util.Date;
-import Clases.Lista;
+import Clases.*;
 /**
  *
  * @author Lithium582
@@ -47,13 +47,19 @@ public interface IFarmacia {
      * Retorna la lista de artículos
      * @return Retorna la lista.
      */
-    public Lista<IArticulo> getArticulos();
+    public Lista<IArbol<IArticulo>> getArticulos();
 
     /**
      * Retorna la lista de ventas
      * @return Retorna la lista.
      */
-    public Lista<IVenta> getVentas();
+    public Lista<IArbol<IMovimiento>> getVentas();
+    
+    /**
+     * Retorna la lista de compras
+     * @return Retorna la lista.
+     */
+    public Lista<IArbol<IMovimiento>> getCompras();
     
     /**
      * Mediante la carga de un archivo con extensión .csv,
@@ -69,7 +75,7 @@ public interface IFarmacia {
      * @param id ID del Artículo a buscar.
      * @return Artículo encontrado.
      */
-    public IArticulo BuscarXID(Integer id);
+    public IArticulo BuscarXID(Comparable id);
 
     /**
      * Busca un Artículo por su descripción.
@@ -92,9 +98,10 @@ public interface IFarmacia {
      * De ya existir, agrega uno a la cantidad existente en stock
      *
      * @param pArticulo Nuevo Artículo
+     * @param pArea Área a la que pertenece el artículo
      * @return Artículo insertado con éxito
     **/
-    public Boolean InsertarArticulo(IArticulo pArticulo);
+    public Boolean InsertarArticulo(IArticulo pArticulo, Comparable pArea);
 
     /**
      * Elimina un artículo de la lista
@@ -102,7 +109,7 @@ public interface IFarmacia {
      * @param pId ID del artículo a eliminar
      * @return Eliminación realizada con éxito.
      */
-    public Boolean EliminarArticulo(Integer pId);
+    public Boolean EliminarArticulo(Comparable pId);
 
     /**
      * Guarda la venta recibida por parámetro en la lista
@@ -112,7 +119,7 @@ public interface IFarmacia {
      * @param pVenta Venta realizada
      * @return Venta realizada con éxito
      */
-    public Boolean GuardarVenta(IVenta pVenta);
+    public Boolean GuardarVenta(IMovimiento pVenta);
 
     /**
      * Agrega stock a un producto existente.
@@ -120,7 +127,7 @@ public interface IFarmacia {
      * @param pIdVenta ID de la venta reintegrada
      * @return Booleano indicando si la operacion fue realizada correctamente.
      */
-    public Boolean ReintegroVenta(Integer pIdVenta);
+    public Boolean ReintegroVenta(Comparable pIdVenta);
     
     /*
         Recibe ID venta y elimina esa venta retornándola de la lista

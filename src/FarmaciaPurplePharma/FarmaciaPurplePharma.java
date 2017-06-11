@@ -32,9 +32,12 @@ public class FarmaciaPurplePharma {
     **/
     public static void main(String[] args) {
         try{
+            //Ventana v = new Ventana();
+            //v.show();
+            
             Farmacia farma = new Farmacia("UCUPharma","Wall Street 1929","666-666-6666");
             // TODO code application logic here
-
+            
             Integer op = -1;
             Boolean b = false;
 
@@ -255,7 +258,7 @@ public class FarmaciaPurplePharma {
                                 objArticulo.setStock(0);
                             }
                             
-                            Venta objVenta = new Venta(objArticulo,intCantidad);
+                            Movimiento objVenta = new Movimiento(objArticulo,intCantidad);
                             
                             if(farma.GuardarVenta(objVenta)){
                                 System.out.println("Venta N° " + objVenta.getID().toString() + " realizada con éxito\nUCUPharma agradece su compra :D");

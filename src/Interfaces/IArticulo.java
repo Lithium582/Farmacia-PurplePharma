@@ -17,7 +17,7 @@ public interface IArticulo {
      * Devuelve el ID del Articulo
      * @return
      */
-    public Integer getID();
+    public Comparable getID();
     
     /**
      * Devuelve la Fecha de Creación del Articulo

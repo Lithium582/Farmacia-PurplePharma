@@ -6,7 +6,7 @@
 package Interfaces;
 
 /**
- *
+ * @param <T> Tipo de la lista
  * @author Lithium582
  */
 public interface ILista<T> {
@@ -15,7 +15,7 @@ public interface ILista<T> {
      *
      * @param pNodo Nuevo nodo
      */
-    public void Insertar(INodo<T> pNodo);
+    public void Insertar(INodoLista<T> pNodo);
 
     /**
      * Metodo encargado de buscar un nodo cuya key es la indicada.
@@ -23,7 +23,7 @@ public interface ILista<T> {
      * @param pId - ID del nodo a buscar.
      * @return El nodo encontrado. En caso de no encontrarlo, retornar null.
      */
-    public INodo<T> Buscar(Integer pId);
+    public INodoLista<T> Buscar(Comparable pId);
 
     /**
      * Metodo encargado de eliminar un nodo cuya ID es el indicado.
@@ -31,7 +31,7 @@ public interface ILista<T> {
      * @param pId Clave del nodo a eliminar.
      * @return True en caso de que la eliminaci�n haya sido efectuada con éxito.
      */
-    public boolean Borrar(Integer pId);
+    public boolean Borrar(Comparable pId);
 
     /**
      * Método encargado de imprimir en consola las keys de los nodos
@@ -69,5 +69,5 @@ public interface ILista<T> {
      *
      * @return Primer nodo de la lista.
      */
-    public INodo<T> getPrimero();
+    public INodoLista<T> getPrimero();
 }

@@ -9,7 +9,7 @@ package Interfaces;
  * @param <T> Tipo del nodo
  * @author Lithium582
 **/
-public interface INodo<T> {
+public interface INodoLista<T> {
    /**
      * Retorna el dato contenido en el nodo.
      *
@@ -29,14 +29,14 @@ public interface INodo<T> {
      *
      * @param pValue Nodo a asignar como siguiente.
      */
-    public void setSiguiente(INodo<T> pValue);
+    public void setSiguiente(INodoLista<T> pValue);
 
     /**
      * Retorna el siguiente nodo al nodo actual.
      *
      * @return Siguiente nodo del actual
      */
-    public INodo<T> getSiguiente();
+    public INodoLista<T> getSiguiente();
 
     /**
      * Imprime los datos del node
@@ -53,19 +53,19 @@ public interface INodo<T> {
      * @param pNodo
      * @return si son iguales, por la clave
      */
-    public boolean equals(INodo<T> pNodo);
+    public boolean equals(INodoLista<T> pNodo);
 
     /**
      * Retorna el tag del nodo
      *
      * @return tag del nodo
      */
-    public Integer getEtiqueta();
+    public Comparable getEtiqueta();
 
     /**
      *
-     * @param tag
+     * @param pEtiqueta
      * @return devuelve -1 si this tiene una tag menor, 0 si son iguales, 1 si es mayor
      */
-    public Comparable compareTo(Integer etiqueta);
+    public Comparable compareTo(Comparable pEtiqueta);
 }

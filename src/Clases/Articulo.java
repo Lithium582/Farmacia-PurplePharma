@@ -15,7 +15,7 @@ import java.util.*;
 public class Articulo implements IArticulo {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
-    private final Integer id;
+    private final Comparable<Integer> id;
     private Date fecha_Creacion;
     private Date fecha_Actualizacion;
     private double precio;
@@ -49,7 +49,7 @@ public class Articulo implements IArticulo {
      * @param pReceta Requiere receta
      */
     
-    public Articulo(Integer pID, Date pFechaCreacion, Date pFechaActualizacion, Double pPrecio, String pNombre, String pDescripcion, boolean pEstado, boolean pRefrigeracion, boolean pReceta){
+    public Articulo(Comparable pID, Date pFechaCreacion, Date pFechaActualizacion, Double pPrecio, String pNombre, String pDescripcion, boolean pEstado, boolean pRefrigeracion, boolean pReceta){
         this.id = pID;
         this.fecha_Creacion = pFechaCreacion;
         this.fecha_Actualizacion = pFechaActualizacion;
@@ -66,7 +66,7 @@ public class Articulo implements IArticulo {
 
     // <editor-fold defaultstate="extended" desc="Propiedades">
     @Override
-    public Integer getID() {
+    public Comparable getID() {
         return this.id;        
     }
 

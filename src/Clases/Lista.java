@@ -13,7 +13,7 @@ import Interfaces.*;
 
 public class Lista<T> implements ILista<T> {
 
-    private INodo<T> primero;
+    private INodoLista<T> primero;
 
     /**
      Constructor de Lista
@@ -26,13 +26,13 @@ public class Lista<T> implements ILista<T> {
      * Constructor de Lista que recibe el primer Nodo.
      * @param pNodo Primer Nodo de la lista.
      */
-    public Lista(INodo<T> pNodo) {
+    public Lista(INodoLista<T> pNodo) {
         this.primero = pNodo;
     }
     
     @Override
-    public void Insertar(INodo<T> pNodo) {
-        INodo<T> aux = this.primero;
+    public void Insertar(INodoLista<T> pNodo) {
+        INodoLista<T> aux = this.primero;
         pNodo.setSiguiente(null);
         
         if (this.esVacia()) {
@@ -74,11 +74,11 @@ public class Lista<T> implements ILista<T> {
     }
 
     @Override
-    public INodo<T> Buscar(Integer pId) {
+    public INodoLista<T> Buscar(Comparable pId) {
         if (esVacia()) {
             return null;
         } else {
-            INodo<T> aux = primero;
+            INodoLista<T> aux = primero;
             while (aux != null) {
                 if ((aux.getEtiqueta()).equals(pId)) {
                     return aux;
@@ -90,7 +90,7 @@ public class Lista<T> implements ILista<T> {
     }
 
     @Override
-    public boolean Borrar(Integer pId) {
+    public boolean Borrar(Comparable pId) {
         if (esVacia()) {
             return false;
         }
@@ -100,16 +100,16 @@ public class Lista<T> implements ILista<T> {
                 return true;
             }
         }
-        INodo<T> aux = primero;
+        INodoLista<T> aux = primero;
         if (aux.getEtiqueta().equals(pId)) {
             //Eliminamos el primer elemento
-            INodo<T> temp = aux.getSiguiente();
+            INodoLista<T> temp = aux.getSiguiente();
             primero = temp;
             return true;
         }
         while (aux.getSiguiente() != null) {
             if (aux.getSiguiente().getEtiqueta().equals(pId)) {
-                INodo<T> temp = aux.getSiguiente();
+                INodoLista<T> temp = aux.getSiguiente();
                 aux.setSiguiente(temp.getSiguiente());
                 return true;
 
@@ -123,7 +123,7 @@ public class Lista<T> implements ILista<T> {
     public String Print() {
         String aux = "";
         if (!esVacia()) {
-            INodo<T> temp = primero;
+            INodoLista<T> temp = primero;
             while(temp != null) {
                 temp.PrintEtiqueta();
                 temp = temp.getSiguiente();
@@ -138,7 +138,7 @@ public class Lista<T> implements ILista<T> {
         if (esVacia()) {
             return "";
         } else {
-            INodo<T> temp = primero;
+            INodoLista<T> temp = primero;
             aux = temp.getObjeto().toString();
             while (temp.getSiguiente() != null) {
                 aux += "\n" + temp.getSiguiente().getObjeto().toString();
@@ -156,7 +156,7 @@ public class Lista<T> implements ILista<T> {
             System.out.println("Cantidad de elementos 0.");
             return 0;
         } else {
-            INodo<T> aux = primero;
+            INodoLista<T> aux = primero;
             while (aux != null) {
                 counter++;
                 aux = aux.getSiguiente();
@@ -171,7 +171,7 @@ public class Lista<T> implements ILista<T> {
     }
 
     @Override
-    public INodo<T> getPrimero() {
+    public INodoLista<T> getPrimero() {
         return this.primero;
     }
     

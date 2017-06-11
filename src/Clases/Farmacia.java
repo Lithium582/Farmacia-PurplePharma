@@ -18,8 +18,12 @@ public class Farmacia implements IFarmacia {
         private final String nombre;
         private String direccion;
         private String telefono;
-        private Lista<IArticulo> listaArticulos;
-        private Lista<IVenta> listaVentas;
+        //Productos en STOCK
+        private final Lista<IArbol<IArticulo>> listaArticulos;
+        //Ventas realizadas
+        private final Lista<IArbol<IMovimiento>> listaVentas;
+        //Compras realizadas
+        private final Lista<IArbol<IMovimiento>> listaCompras;
     // </editor-fold>
     
     // <editor-fold defaultstate="extended" desc="Constructores">
@@ -28,11 +32,12 @@ public class Farmacia implements IFarmacia {
      * Constructor de Farmacia
      */
     public Farmacia(){
-        this.nombre = "";
-        this.direccion = "";
-        this.telefono = "";
-        this.listaArticulos = new Lista<IArticulo>();
-        this.listaVentas = new Lista<IVenta>();
+        this.nombre = "Purple Pharma";
+        this.direccion = "Avenida Siempreviva 1234";
+        this.telefono = "666-333-666";
+        this.listaArticulos = new Lista<IArbol<IArticulo>>();
+        this.listaVentas = new Lista<IArbol<IMovimiento>>();
+        this.listaCompras = new Lista<IArbol<IMovimiento>>();
     }
     
     /**
@@ -45,8 +50,9 @@ public class Farmacia implements IFarmacia {
         this.nombre = pNombre;
         this.direccion = pDireccion;
         this.telefono = pTelefono;
-        this.listaArticulos = new Lista<IArticulo>();
-        this.listaVentas = new Lista<IVenta>();
+        this.listaArticulos = new Lista<IArbol<IArticulo>>();
+        this.listaVentas = new Lista<IArbol<IMovimiento>>();
+        this.listaCompras = new Lista<IArbol<IMovimiento>>();
     }
 
     // </editor-fold>
@@ -78,12 +84,12 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public Lista<IArticulo> getArticulos() {
+    public Lista<IArbol<IArticulo>> getArticulos() {
         return this.listaArticulos;
     }
 
     @Override
-    public Lista<IVenta> getVentas() {
+    public Lista<IArbol<IMovimiento>> getVentas() {
         return this.listaVentas;
     }
 
@@ -100,7 +106,7 @@ public class Farmacia implements IFarmacia {
             
             if (linea.length == 9){
                 try{
-                    Integer id = Integer.parseInt(linea[0].trim());
+                    Comparable id = Integer.parseInt(linea[0].trim());
                     Date fecha_Creacion = FormatoFecha(linea[1].trim());
                     Date fecha_Actualizacion = FormatoFecha(linea[2].trim());
                     double precio =  Double.parseDouble((linea[3].trim()));
@@ -109,8 +115,26 @@ public class Farmacia implements IFarmacia {
                     Boolean estado = VerificarEstado(linea[6].trim());
                     boolean refrigerado = VerificarBooleano(linea[7].trim());
                     boolean receta = VerificarBooleano(linea[8].trim());
+                    String areaAplicacion = "";
+                    
+                    int res = i%3;
+                    int res2 = i%2;
+                    int res3 = i%5;
+                    
+                    if (res3 == 0){
+                        areaAplicacion = "MG";
+                    }else if (res == 0){
+                        areaAplicacion = "CAR";
+                    }else if(res2 == 0){
+                        areaAplicacion = "END";
+                    }else{
+                        areaAplicacion = "-1";
+                    }
+                    
+                    
                     IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,estado,refrigerado,receta);
-                    this.InsertarArticulo(a);
+                    
+                    this.InsertarArticulo(a,areaAplicacion);
                 }
                 catch(Exception ex){
                     cantErroneos++;
@@ -142,17 +166,11 @@ public class Farmacia implements IFarmacia {
             if (linea.length == 2){
                 Integer idArticulo = Integer.parseInt(linea[0].trim());
                 Integer stock = Integer.parseInt(linea[1].trim());
-                INodo<IArticulo> nodo = listaArticulos.Buscar(idArticulo);
+                IArticulo objArticulo = BuscarXID(idArticulo);
                 
-                if(nodo != null){
-                    IArticulo articuloBuscado = nodo.getObjeto();
-                    if(articuloBuscado != null){
-                        Integer stockActual = articuloBuscado.getStock();
-                        articuloBuscado.setStock(stockActual + stock);
-                    }
-                    else{
-                        cantErroneos++;
-                    }
+                if(objArticulo != null){
+                    Integer stockActual = objArticulo.getStock();
+                    objArticulo.setStock(stockActual + stock);
                 }
                 else{
                     cantErroneos++;
@@ -175,23 +193,29 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public IArticulo BuscarXID(Integer id) {
+    public IArticulo BuscarXID(Comparable pId) {
        if (listaArticulos.esVacia()) {
             return null;
        }
        else {
-            INodo<IArticulo> nodoBusqueda = listaArticulos.Buscar(id);
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                INodoArbol<IArticulo> nodoArbol = nodoActual.getObjeto().buscar(pId);
+                
+                if(nodoArbol != null){
+                    IArticulo prodBuscado = nodoArbol.getDatos();
                     
-            if(nodoBusqueda == null){
-                return null;
-            }
-            else{
-                IArticulo retorno = nodoBusqueda.getObjeto();
-                return retorno;
+                    return prodBuscado;
+                }
+                nodoActual = nodoActual.getSiguiente();
             }
        }
+       
+       return null;
     }
 
+    //No implementado
     @Override
     public String buscarXDescripcion(String pDescripcion) {
         String cadenaRetorno = "";
@@ -200,7 +224,7 @@ public class Farmacia implements IFarmacia {
         } else {
             Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
             
-            INodo<IArticulo> aux = listaArticulos.getPrimero();
+            INodoLista<IArbol<IArticulo>> aux = listaArticulos.getPrimero();
             while (aux != null) {
                 String nom = aux.getObjeto().getDescripcion().toLowerCase();
                 if (nom.contains(pDescripcion.toLowerCase())) {
@@ -212,6 +236,7 @@ public class Farmacia implements IFarmacia {
         return cadenaRetorno;
     }
     
+    //No implementado
     @Override
     public String buscarXNombre(String pNombre) {
         String cadenaRetorno = "";
@@ -220,7 +245,7 @@ public class Farmacia implements IFarmacia {
         } else {
             Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
             
-            INodo<IArticulo> aux = listaArticulos.getPrimero();
+            INodoLista<IArticulo> aux = listaArticulos.getPrimero();
             while (aux != null) {
                 String nom = aux.getObjeto().getNombre().toLowerCase();
                 if (nom.contains(pNombre.toLowerCase())) {
@@ -233,52 +258,71 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public Boolean InsertarArticulo(IArticulo pArticulo) {
-        Nodo<IArticulo> _nodo = new Nodo<IArticulo>(pArticulo,pArticulo.getID());
+    public Boolean InsertarArticulo(IArticulo pArticulo, Comparable pArea) {
+        INodoLista<IArbol<IArticulo>> nodoBuscado = this.listaArticulos.Buscar(pArea);
         
-        INodo<IArticulo> buscado = listaArticulos.Buscar(pArticulo.getID());
-        if(buscado == null){
-            this.listaArticulos.Insertar(_nodo);
-        }else{
-            IArticulo obj = buscado.getObjeto();
+        if (nodoBuscado == null){
+            //Significa que el área no existe
+            //Generamos el árbol y luego insertamos ese árbol a la lista
+            INodoArbol objNodoArbol = new NodoArbol(pArticulo.getID(), pArticulo);
+            IArbol objArbol = new Arbol(objNodoArbol);
             
-            if (obj.getClass().getName() == "Articulo"){
-                obj.setDescripcion(pArticulo.getDescripcion());
-                obj.setEstado(pArticulo.getEstado());
-                obj.setFechaActualizacion(Calendar.getInstance().getTime());
-                obj.setNombre(pArticulo.getNombre());
-                obj.setPrecio(pArticulo.getPrecio());
-                obj.setReceta(pArticulo.getReceta());
-                obj.setRefrigerado(pArticulo.getRefrigerado());
-                obj.setStock(pArticulo.getStock());
+            INodoLista<IArbol<IArticulo>> objLista = new NodoLista<IArbol<IArticulo>>(objArbol, pArea);
+            
+            this.listaArticulos.Insertar(objLista);
+            return true;
+        } else{
+            INodoArbol<IArticulo> nodoArbolLista = nodoBuscado.getObjeto().buscar(pArticulo.getID());
+            
+            if (nodoArbolLista == null){
+                INodoArbol<IArticulo> nuevoArticulo = new NodoArbol<IArticulo>(pArticulo.getID(),pArticulo);
+                nodoBuscado.getObjeto().insertar(nuevoArticulo);
+                return true;
+            }
+            else{
+                IArticulo objEncontrado = nodoArbolLista.getDatos();
+                
+                objEncontrado.setDescripcion(pArticulo.getDescripcion());
+                objEncontrado.setEstado(pArticulo.getEstado());
+                objEncontrado.setFechaActualizacion(Calendar.getInstance().getTime());
+                objEncontrado.setNombre(pArticulo.getNombre());
+                objEncontrado.setPrecio(pArticulo.getPrecio());
+                objEncontrado.setReceta(pArticulo.getReceta());
+                objEncontrado.setRefrigerado(pArticulo.getRefrigerado());
+                objEncontrado.setStock(pArticulo.getStock());
+            }
+            
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean EliminarArticulo(Comparable pId) {
+        INodoLista<IArbol<IArticulo>> aux = listaArticulos.getPrimero();
+        while (aux != null) {
+            INodoArbol<IArticulo> nodoBuscado = aux.getObjeto().buscar(pId);
+            
+            if (nodoBuscado == null) {
+                aux = aux.getSiguiente();
+            }
+            else{
+                if (nodoBuscado.getDatos().getStock() > 0){
+                    System.out.println("No se puede eliminar un artículo con stock");
+                    return false;
+                }
+                else{
+                    return listaArticulos.Borrar(pId);
+                }
             }
         }
         
-        return true;
+        System.out.println("Artículo inexistente");
+        return false;
     }
 
     @Override
-    public Boolean EliminarArticulo(Integer pId) {
-        INodo<IArticulo> buscado = listaArticulos.Buscar(pId);
-        
-        if (buscado == null){
-            System.out.println("Artículo inexistente");
-            
-            return false;
-        }
-        
-        if(buscado.getObjeto().getStock() > 0){
-            System.out.println("No se puede eliminar un artículo con stock");
-            
-            return false;
-        }
-        
-        return listaArticulos.Borrar(pId);
-    }
-
-    @Override
-    public Boolean GuardarVenta(IVenta pVenta) {
-        Nodo<IVenta> pNodo = new Nodo<IVenta>(pVenta, pVenta.getID());
+    public Boolean GuardarVenta(IMovimiento pVenta) {
+        NodoLista<IMovimiento> pNodo = new NodoLista<IMovimiento>(pVenta, pVenta.getID());
         
         listaVentas.Insertar(pNodo);
         
@@ -287,18 +331,18 @@ public class Farmacia implements IFarmacia {
 
     @Override
     public Boolean ReintegroVenta(Integer pIdVenta) {
-        INodo<IVenta> nodoVenta = listaVentas.Buscar(pIdVenta);
+        INodoLista<IMovimiento> nodoVenta = listaVentas.Buscar(pIdVenta);
         if (nodoVenta == null){
             return false;
         }
         
-        IVenta objVenta = nodoVenta.getObjeto();
+        IMovimiento objVenta = nodoVenta.getObjeto();
         
         if (objVenta == null){
             return false;
         }
         else{
-            INodo<IArticulo> nodoArticulo = listaArticulos.Buscar(objVenta.GetIdArticulo());
+            INodoLista<IArticulo> nodoArticulo = listaArticulos.Buscar(objVenta.GetIdArticulo());
             
             if (nodoArticulo == null){
                 return false;
@@ -351,7 +395,7 @@ public class Farmacia implements IFarmacia {
             return "";
         } else {
             
-            INodo<IVenta> aux = listaVentas.getPrimero();
+            INodoLista<IMovimiento> aux = listaVentas.getPrimero();
             while (aux != null) {
                 Date fechaVenta = aux.getObjeto().GetFecha();
                 Long longFComienzo = pFechaComienzo.getTime();
