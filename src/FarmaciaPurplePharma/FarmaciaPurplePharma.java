@@ -52,28 +52,31 @@ public class FarmaciaPurplePharma {
 //            bra.readLine();
 //            ///////////////////////////////////////////////////////////////////////////////
 
+//            SimpleDateFormat dta = new SimpleDateFormat("dd-MM-yyyy");
+//            
+//            IArticulo aa = new Articulo(1,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hola","Des",true,true,true);
+//            IArticulo ab = new Articulo(2,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Chau","Des",true,true,true);
+//            IArticulo ac = new Articulo(6,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
+//            
+//            INodoArbol<IArticulo> nodo = new NodoArbol<IArticulo>(1,aa);
+//            INodoArbol<IArticulo> nodo2 = new NodoArbol<IArticulo>(2,ab);
+//            INodoArbol<IArticulo> nodo3 = new NodoArbol<IArticulo>(6,ac);
+//            
+//            IArbol<IArticulo> arbol = new Arbol<IArticulo>(nodo);
+//            arbol.insertar(nodo2);
+//            arbol.insertar(nodo3);
+//            
+//            String strA = arbol.buscarXAtributo("nombre", "Ho");
+//            String strB = arbol.buscarXAtributo("descripcion", "es");
+//            
+//            System.out.println(strA);
+//            System.out.println(strB);
+//
+//            BufferedReader bra = new BufferedReader(new InputStreamReader(System.in));
+//            bra.readLine();
+
             Integer op = -1;
             Boolean b = false;
-            SimpleDateFormat dta = new SimpleDateFormat("dd-MM-yyyy");
-            
-            IArticulo aa = new Articulo(1,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Des",true,true,true);
-            IArticulo ab = new Articulo(2,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Des",true,true,true);
-            IArticulo ac = new Articulo(6,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Nombre","Algo",true,true,true);
-            
-            INodoArbol<IArticulo> nodo = new NodoArbol<IArticulo>(1,aa);
-            INodoArbol<IArticulo> nodo2 = new NodoArbol<IArticulo>(2,ab);
-            INodoArbol<IArticulo> nodo3 = new NodoArbol<IArticulo>(6,ac);
-            
-            IArbol<IArticulo> arbol = new Arbol<IArticulo>(nodo);
-            arbol.insertar(nodo2);
-            arbol.insertar(nodo3);
-            
-            String strA = arbol.buscarXAtributo("descripcion", "De");
-            
-            System.out.println(strA);
-
-            BufferedReader bra = new BufferedReader(new InputStreamReader(System.in));
-            bra.readLine();
             
             while(op != 0){
                 try{

@@ -225,7 +225,7 @@ public class Farmacia implements IFarmacia {
             INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
             String str = "";
             while(nodoActual != null){
-                str += nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion);
+                str = nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion);
                 
                 nodoActual = nodoActual.getSiguiente();
             }
@@ -237,22 +237,20 @@ public class Farmacia implements IFarmacia {
     //No implementado
     @Override
     public String buscarXNombre(String pNombre) {
-        String cadenaRetorno = "LOL";
-//        if (listaArticulos.esVacia()) {
-//            return "";
-//        } else {
-//            Lista<IArticulo> listaRetorno = new Lista<IArticulo>();
-//            
-//            INodoLista<IArticulo> aux = listaArticulos.getPrimero();
-//            while (aux != null) {
-//                String nom = aux.getObjeto().getNombre().toLowerCase();
-//                if (nom.contains(pNombre.toLowerCase())) {
-//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-//                }
-//                aux = aux.getSiguiente();
-//            }
-//        }
-        return cadenaRetorno;
+        if (listaArticulos.esVacia()) {
+            return "";
+       }
+       else {
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            String str = "";
+            while(nodoActual != null){
+                str = nodoActual.getObjeto().buscarXAtributo("nombre", pNombre);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return str;
+       }
     }
 
     @Override
