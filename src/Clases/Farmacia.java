@@ -130,10 +130,9 @@ public class Farmacia implements IFarmacia {
                     }else{
                         areaAplicacion = "-1";
                     }
-                    
-                    
+
                     IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,estado,refrigerado,receta);
-                    
+
                     this.InsertarArticulo(a,areaAplicacion);
                 }
                 catch(Exception ex){
@@ -215,7 +214,7 @@ public class Farmacia implements IFarmacia {
        return null;
     }
 
-    //No implementado
+    
     @Override
     public String buscarXDescripcion(String pDescripcion) {
         if (listaArticulos.esVacia()) {
@@ -225,7 +224,7 @@ public class Farmacia implements IFarmacia {
             INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
             String str = "";
             while(nodoActual != null){
-                str = nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion);
+                str += nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion);
                 
                 nodoActual = nodoActual.getSiguiente();
             }
@@ -234,7 +233,6 @@ public class Farmacia implements IFarmacia {
        }
     }
     
-    //No implementado
     @Override
     public String buscarXNombre(String pNombre) {
         if (listaArticulos.esVacia()) {
@@ -244,7 +242,7 @@ public class Farmacia implements IFarmacia {
             INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
             String str = "";
             while(nodoActual != null){
-                str = nodoActual.getObjeto().buscarXAtributo("nombre", pNombre);
+                str += nodoActual.getObjeto().buscarXAtributo("nombre", pNombre);
                 
                 nodoActual = nodoActual.getSiguiente();
             }

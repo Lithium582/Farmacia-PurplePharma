@@ -116,7 +116,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
         }
     }
     
-    public String buscarXAtributo(String pAttr, String pEtiqueta){
+    public String buscarXAtributo(String pAttr, String pStringBuscado){
         try{
             String strReturn = "";
             Class c = this.datos.getClass();
@@ -132,16 +132,16 @@ public class NodoArbol<T> implements INodoArbol<T> {
             f.setAccessible(true);
             String val = (String) f.get(this.datos);
 
-            if (val.contains(pEtiqueta)) {
+            if (val.contains(pStringBuscado)) {
                 strReturn += this.datos.toString();
             }
             
             if (hijoIzq != null) {
-                strReturn += getHijoIzq().buscarXAtributo(pAttr, pEtiqueta);
+                strReturn += getHijoIzq().buscarXAtributo(pAttr, pStringBuscado);
             }
             
             if (hijoDer != null) {
-                strReturn += getHijoDer().buscarXAtributo(pAttr, pEtiqueta);
+                strReturn += getHijoDer().buscarXAtributo(pAttr, pStringBuscado);
             } 
             
             return strReturn;

@@ -35,7 +35,6 @@ public class Arbol<T> implements IArbol<T> {
     // </editor-fold>
 
     // <editor-fold defaultstate="extended" desc="Atributos">
-
     @Override
     public boolean insertar(INodoArbol<T> pNodo) {
         if (esVacio()) {
@@ -55,11 +54,11 @@ public class Arbol<T> implements IArbol<T> {
         }
     }
     
-    public String buscarXAtributo(String pAttr, String pEtiqueta){
+    public String buscarXAtributo(String pAttr, String pStringBuscado){
         if (esVacio()){
             return "";
         }else{
-            return raiz.buscarXAtributo(pAttr, pEtiqueta);
+            return raiz.buscarXAtributo(pAttr, pStringBuscado);
         }
     }
 

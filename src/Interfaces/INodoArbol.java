@@ -63,7 +63,7 @@ public interface INodoArbol<T> {
      * @param pAttr Nombre del atributo de la clase por el cual debe buscar
      * @return Nodo con la etiqueta buscada o null si no existe
      */
-    public String buscarXAtributo(String pAttr, String pEtiqueta);
+    public String buscarXAtributo(String pAttr, String pStringBuscado);
     
     /**
      * Inserta un elemento dentro del arbol.
