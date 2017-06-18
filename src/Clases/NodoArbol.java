@@ -131,7 +131,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
             }
             
             f.setAccessible(true);
-            String val = (String) f.get(this.datos);
+            String val = f.get(this.datos).toString();
 
             if (val.toLowerCase().contains(pStringBuscado.toLowerCase())) {
                 strReturn += this.datos.toString();
@@ -193,7 +193,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
             f.setAccessible(true);
             //System.out.print(f.getType());
             
-            String val = (String) f.get(this.datos);
+            String val = f.get(this.datos).toString();
 
             if (val.toLowerCase().contains(pValorParametro.toLowerCase())) {
                 pListaRetorno.Insertar(new NodoLista(this.datos,this.etiqueta));

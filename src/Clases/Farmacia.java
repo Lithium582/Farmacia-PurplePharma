@@ -116,6 +116,7 @@ public class Farmacia implements IFarmacia {
                     boolean refrigerado = VerificarBooleano(linea[7].trim());
                     boolean receta = VerificarBooleano(linea[8].trim());
                     String areaAplicacion = "";
+                    Integer anoVencimiento = 2017;
                     
                     int res = i%3;
                     int res2 = i%2;
@@ -123,15 +124,19 @@ public class Farmacia implements IFarmacia {
                     
                     if (res3 == 0){
                         areaAplicacion = "MG";
+                        anoVencimiento = 2017;
                     }else if (res == 0){
                         areaAplicacion = "CAR";
+                        anoVencimiento = 2018;
                     }else if(res2 == 0){
                         areaAplicacion = "END";
+                        anoVencimiento = 2020;
                     }else{
                         areaAplicacion = "-1";
+                        anoVencimiento = 2016;
                     }
 
-                    IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,estado,refrigerado,receta);
+                    IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,anoVencimiento,estado,refrigerado,receta);
 
                     this.InsertarArticulo(a,areaAplicacion);
                 }
@@ -280,6 +285,25 @@ public class Farmacia implements IFarmacia {
             
             while(nodoActual != null){
                 nodoActual.getObjeto().buscarXAtributo("nombre", pNombre, listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+       }
+    }
+    
+    @Override
+    public ILista<IArticulo> buscarArticulosXAnoVencimiento(String pAnoVencimiento) {
+       if (listaArticulos.esVacia()) {
+            return null;
+       }
+       else {
+            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                nodoActual.getObjeto().buscarXAtributo("anoVencimiento", pAnoVencimiento, listaRetorno);
                 
                 nodoActual = nodoActual.getSiguiente();
             }

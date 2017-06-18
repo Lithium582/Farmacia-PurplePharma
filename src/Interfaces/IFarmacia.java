@@ -110,6 +110,14 @@ public interface IFarmacia {
     public String buscarXNombre(String pNombre);
 
     /**
+     * Lista todos los artículos por su año de vencimiento
+     *
+     * @param pAnoVencimiento Año de vencimiento de los artículos que se buscan
+     * @return Artículos encontrado.
+     */
+    public ILista<IArticulo> buscarArticulosXAnoVencimiento(String pAnoVencimiento);
+    
+    /**
      * Agregar un nuevo Artículo a la lista
      * De ya existir, agrega uno a la cantidad existente en stock
      *

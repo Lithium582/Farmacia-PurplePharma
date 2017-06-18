@@ -25,6 +25,7 @@ public class Articulo implements IArticulo {
     private boolean refrigerado;
     private boolean receta;
     private Integer stock;
+    private Integer anoVencimiento;
     
     // </editor-fold>
 
@@ -44,12 +45,13 @@ public class Articulo implements IArticulo {
      * @param pPrecio Precio
      * @param pNombre Nombre
      * @param pDescripcion Descripción
+     * @param pAnoVencimiento Año de Vencmiento del Artículo
      * @param pEstado Estado
      * @param pRefrigeracion Estado de refrigeración
      * @param pReceta Requiere receta
      */
     
-    public Articulo(Comparable pID, Date pFechaCreacion, Date pFechaActualizacion, Double pPrecio, String pNombre, String pDescripcion, boolean pEstado, boolean pRefrigeracion, boolean pReceta){
+    public Articulo(Comparable pID, Date pFechaCreacion, Date pFechaActualizacion, Double pPrecio, String pNombre, String pDescripcion, Integer pAnoVencimiento, boolean pEstado, boolean pRefrigeracion, boolean pReceta){
         this.id = pID;
         this.fecha_Creacion = pFechaCreacion;
         this.fecha_Actualizacion = pFechaActualizacion;
@@ -60,6 +62,7 @@ public class Articulo implements IArticulo {
         this.refrigerado = pRefrigeracion;
         this.receta = pReceta;
         this.stock = 0;
+        this.anoVencimiento = pAnoVencimiento;
     }
     
     // </editor-fold>

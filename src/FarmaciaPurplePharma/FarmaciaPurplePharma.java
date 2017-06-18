@@ -191,7 +191,10 @@ public class FarmaciaPurplePharma {
                             System.out.println("Ingrese el área del artículo");
                             String pArea = br.readLine().trim();
                             
-                            Articulo objArticulo = new Articulo(pID,pFechaCreacion,pFechaActualizacion,pPrecio,pNombre,pDescripcion,true,pRefrigeracion,pReceta);
+                            System.out.println("Ingrese el año de vencimiento del artículo");
+                            Integer pAnoVenc = Integer.parseInt(br.readLine().trim());
+                            
+                            Articulo objArticulo = new Articulo(pID,pFechaCreacion,pFechaActualizacion,pPrecio,pNombre,pDescripcion,pAnoVenc,true,pRefrigeracion,pReceta);
                             if (farma.InsertarArticulo(objArticulo, pArea)){
                                 System.out.println("Artículo ingresado con éxito");
                             }
@@ -218,6 +221,7 @@ public class FarmaciaPurplePharma {
                             System.out.println("1 - Buscar por ID de artículo");
                             System.out.println("2 - Buscar por nombre de artículo");
                             System.out.println("3 - Buscar por descripción de artículo");
+                            System.out.println("4 - Buscar por artículos por año de vencimiento");
                             Integer subOP = Integer.parseInt(br.readLine());
 
                             switch(subOP){
@@ -242,8 +246,8 @@ public class FarmaciaPurplePharma {
                                     
                                     ILista<IArticulo> a = farma.listarXNombre(nomBusqueda);
                                     
-                                    if (a == null){
-                                        System.out.println("Artículo inexistente");
+                                    if (a == null || a.CantidadDeElementos() == 0){
+                                        System.out.println("Artículos inexistentes");
                                     }
                                     else{
                                         System.out.println(a.Print("-"));
@@ -257,8 +261,23 @@ public class FarmaciaPurplePharma {
                                     
                                     ILista<IArticulo> a = farma.listarXDescripcion(descBusqueda);
                                     
-                                    if (a == null){
-                                        System.out.println("Artículo inexistente");
+                                    if (a == null  || a.CantidadDeElementos() == 0){
+                                        System.out.println("Artículos inexistentes");
+                                    }
+                                    else{
+                                        System.out.println(a.Print("-"));
+                                    }
+                                    
+                                    break;
+                                }
+                                case 4:{
+                                    System.out.println("Ingrese el año de Vencimiento");
+                                    String anoBuscado = (br.readLine());
+                                    
+                                    ILista<IArticulo> a = farma.buscarArticulosXAnoVencimiento(anoBuscado);
+                                    
+                                    if (a == null || a.CantidadDeElementos() == 0){
+                                        System.out.println("No hay artículos con vencimiento en " + anoBuscado);
                                     }
                                     else{
                                         System.out.println(a.Print("-"));
