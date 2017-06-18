@@ -213,7 +213,6 @@ public class Farmacia implements IFarmacia {
        
        return null;
     }
-
     
     @Override
     public String buscarXDescripcion(String pDescripcion) {
@@ -230,6 +229,25 @@ public class Farmacia implements IFarmacia {
             }
             
             return str;
+       }
+    }
+    
+    @Override
+    public ILista<IArticulo> listarXDescripcion(String pDescripcion) {
+        if (listaArticulos.esVacia()) {
+            return null;
+       }
+       else {
+            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                nodoActual.getObjeto().buscarXAtributo("descripcion", pDescripcion,listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
        }
     }
     
@@ -251,6 +269,25 @@ public class Farmacia implements IFarmacia {
        }
     }
 
+    @Override
+    public ILista<IArticulo> listarXNombre(String pNombre){
+        if (listaArticulos.esVacia()) {
+            return null;
+       }
+       else {
+            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                nodoActual.getObjeto().buscarXAtributo("nombre", pNombre, listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+       }
+    }
+    
     @Override
     public Boolean InsertarArticulo(IArticulo pArticulo, Comparable pArea) {
         INodoLista<IArbol<IArticulo>> nodoBuscado = this.listaArticulos.Buscar(pArea);

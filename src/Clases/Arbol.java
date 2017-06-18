@@ -62,6 +62,15 @@ public class Arbol<T> implements IArbol<T> {
     }
     
     @Override
+    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno){
+        if(esVacio()){
+            pListaRetorno = null;
+        }else{
+            raiz.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
+        }
+    }
+    
+    @Override
     public String buscarXAtributo(String pAttr, String pStringBuscado){
         if (esVacio()){
             return "";

@@ -240,13 +240,13 @@ public class FarmaciaPurplePharma {
                                     System.out.println("Ingrese el nombre del producto buscado");
                                     String nomBusqueda = (br.readLine());
                                     
-                                    String a = farma.buscarXNombre(nomBusqueda);
+                                    ILista<IArticulo> a = farma.listarXNombre(nomBusqueda);
                                     
-                                    if (a.equals("") || a == null){
+                                    if (a == null){
                                         System.out.println("Artículo inexistente");
                                     }
                                     else{
-                                        System.out.println(a);
+                                        System.out.println(a.Print("-"));
                                     }
                                     
                                     break;
@@ -255,13 +255,13 @@ public class FarmaciaPurplePharma {
                                     System.out.println("Ingrese la descripción del producto buscado");
                                     String descBusqueda = (br.readLine());
                                     
-                                    String a = farma.buscarXDescripcion(descBusqueda);
+                                    ILista<IArticulo> a = farma.listarXDescripcion(descBusqueda);
                                     
-                                    if (a.equals("") || a == null){
+                                    if (a == null){
                                         System.out.println("Artículo inexistente");
                                     }
                                     else{
-                                        System.out.println(a);
+                                        System.out.println(a.Print("-"));
                                     }
                                     
                                     break;
@@ -354,7 +354,7 @@ public class FarmaciaPurplePharma {
                             
                         }
                         else{
-                            System.out.println("Las fechas se ingresan en formato dd-MM-yyyy\nEjemplo: 25/08/2016");
+                            System.out.println("Las fechas se ingresan en formato dd-MM-yyyy\nEjemplo: 25-08-2016");
                             System.out.println("Ingrese la primera fecha");
                             String fecha1 = br.readLine();
                             System.out.println("Ingrese la segunda fecha");

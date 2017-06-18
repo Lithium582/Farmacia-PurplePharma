@@ -37,6 +37,14 @@ public interface IArbol<T> {
      */
     public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno);
 
+    /**
+     * Busca los elementos por el atributo recibido por parámetro
+     *
+     * @param aParam Nombre del atributo de la clase por el cual debe buscar
+     * @param pValorParametro Valor del atributo buscado
+     * @param pListaRetorno Lista que se cargará con los nodos cuyo parámetro coincida con el valor buscado
+     */
+    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno);
     
     /**
      * Busca un elemento por el atributo recibido por parámetro

@@ -86,6 +86,22 @@ public interface IFarmacia {
     public String buscarXDescripcion(String pDescripcion);
     
     /**
+     * Busca a todos los artículos cuya descripción coincida con el parámetro recibido.
+     *
+     * @param pDescripcion Descripción del Artículo.
+     * @return Artículo encontrado.
+     */
+    public ILista<IArticulo> listarXDescripcion(String pDescripcion);
+    
+    /**
+     * Busca a todos los artículos cuyo nombre coincida con el parámetro recibido.
+     *
+     * @param pNombre Nombre del Artículo.
+     * @return Artículo encontrado.
+     */
+    public ILista<IArticulo> listarXNombre(String pNombre);
+    
+    /**
      * Busca un Artículo por su nombre.
      *
      * @param pNombre Nombre del Artículo.

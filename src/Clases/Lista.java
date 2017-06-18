@@ -139,9 +139,11 @@ public class Lista<T> implements ILista<T> {
             return "";
         } else {
             INodoLista<T> temp = primero;
-            aux = temp.getObjeto().toString();
+            aux = temp.getEtiqueta().toString() + ":\n";
+            aux += temp.getObjeto().toString() + "\n";
             while (temp.getSiguiente() != null) {
-                aux += "\n" + temp.getSiguiente().getObjeto().toString();
+                aux += temp.getSiguiente().getEtiqueta().toString() + ":\n";
+                aux += temp.getSiguiente().getObjeto().toString() + "\n";
                 temp = temp.getSiguiente();
             }
 
