@@ -365,7 +365,7 @@ public class FarmaciaPurplePharma {
                             try{
                                 Date dateFecha1 = dt.parse(fecha1);
                                 Date dateFecha2 = dt.parse(fecha2);
-                                //dateFecha2.setTime(dateFecha2.getTime() + 86400000L);
+                                dateFecha2.setTime(dateFecha2.getTime() + 86400000L);
                             
                                 ILista<IMovimiento> listaVentas = farma.ListadoVenta(dateFecha1.getTime(), dateFecha2.getTime());
 
@@ -373,7 +373,7 @@ public class FarmaciaPurplePharma {
                                     System.out.println("No hay ventas en ese rango de fechas");
                                 }
                                 else{
-                                    System.out.println(listaVentas.toString());
+                                    System.out.println(listaVentas.Print("-"));
                                 }
                             }
                             catch(Exception ex){
