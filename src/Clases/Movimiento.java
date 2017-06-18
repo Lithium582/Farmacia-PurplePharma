@@ -15,8 +15,8 @@ import java.util.*;
 public class Movimiento implements IMovimiento {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
-        private static Integer ultimoIDGenerado = 0;
-        private Comparable<Integer> id;
+        //private static Integer ultimoIDGenerado = 0;
+        private Comparable<Long> id;
         private Date Fecha;
         private Comparable<Integer> idArticulo;
         private Integer cantidad;
@@ -61,12 +61,16 @@ public class Movimiento implements IMovimiento {
     
     //<editor-fold defaultstate="extended" desc="Constructores">
         public Movimiento(){
-            
+            this.id = -1L;
+            this.Fecha = new Date();
+            this.idArticulo = -1;
+            this.valorFinal = 0D;
+            this.cantidad = -1;
         }
         
         public Movimiento(IArticulo pArticulo, Integer pCantidad){
-            this.id = ++Movimiento.ultimoIDGenerado;
             this.Fecha = Calendar.getInstance().getTime();
+            this.id = this.Fecha.getTime();
             this.idArticulo = pArticulo.getID();
             this.cantidad = pCantidad;
             this.valorFinal = pArticulo.getPrecio() * pCantidad;
@@ -74,7 +78,7 @@ public class Movimiento implements IMovimiento {
     //</editor-fold>
     
     // <editor-fold defaultstate="extended" desc="Funciones y Métodos">
-        public String toString(String pSeparador) {
+        public String toString() {
             SimpleDateFormat dt = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String fecha = "";
             

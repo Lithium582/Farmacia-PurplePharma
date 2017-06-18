@@ -57,20 +57,37 @@ public class FarmaciaPurplePharma {
 //            IArticulo aa = new Articulo(1,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hola","Des",true,true,true);
 //            IArticulo ab = new Articulo(2,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Chau","Des",true,true,true);
 //            IArticulo ac = new Articulo(6,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
+//            IArticulo ad = new Articulo(8,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
+//            IArticulo ae = new Articulo(12,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
+//            IArticulo af = new Articulo(16,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
+//            IArticulo ag = new Articulo(25,dta.parse("01-06-2017 20:00:01"),dta.parse("01-06-2017 20:00:01"),5D,"Hoau","Algo",true,true,true);
 //            
-//            INodoArbol<IArticulo> nodo = new NodoArbol<IArticulo>(1,aa);
-//            INodoArbol<IArticulo> nodo2 = new NodoArbol<IArticulo>(2,ab);
-//            INodoArbol<IArticulo> nodo3 = new NodoArbol<IArticulo>(6,ac);
+//            INodoArbol<IArticulo> nodo = new NodoArbol<IArticulo>(aa.getID(),aa);
+//            INodoArbol<IArticulo> nodo2 = new NodoArbol<IArticulo>(ab.getID(),ab);
+//            INodoArbol<IArticulo> nodo3 = new NodoArbol<IArticulo>(ac.getID(),ac);
+//            INodoArbol<IArticulo> nodo4 = new NodoArbol<IArticulo>(ad.getID(),ad);
+//            INodoArbol<IArticulo> nodo5 = new NodoArbol<IArticulo>(ae.getID(),ae);
+//            INodoArbol<IArticulo> nodo6 = new NodoArbol<IArticulo>(af.getID(),af);
+//            INodoArbol<IArticulo> nodo7 = new NodoArbol<IArticulo>(ag.getID(),ag);
 //            
 //            IArbol<IArticulo> arbol = new Arbol<IArticulo>(nodo);
 //            arbol.insertar(nodo2);
 //            arbol.insertar(nodo3);
-//            
-//            String strA = arbol.buscarXAtributo("nombre", "Ho");
-//            String strB = arbol.buscarXAtributo("descripcion", "es");
-//            
+//            arbol.insertar(nodo4);
+//            arbol.insertar(nodo5);
+//            arbol.insertar(nodo6);
+//            arbol.insertar(nodo7);
+            
+            //String strA = arbol.buscarXAtributo("nombre", "Ho");
+            //String strB = arbol.buscarXAtributo("descripcion", "es");
+            
 //            System.out.println(strA);
 //            System.out.println(strB);
+
+//            ILista<IArticulo> lista = new Lista<IArticulo>();
+//            arbol.buscarInRango(2, 16, lista);
+//            
+//            System.out.println(lista.Print());
 //
 //            BufferedReader bra = new BufferedReader(new InputStreamReader(System.in));
 //            bra.readLine();
@@ -311,7 +328,7 @@ public class FarmaciaPurplePharma {
                     }
                     case 8:{
                         System.out.println("Ingrese el ID de la venta que se quiere devolver");
-                        Integer idVentaBuscar = Integer.parseInt(br.readLine());
+                        Long idVentaBuscar = Long.parseLong(br.readLine());
                         
                         if (farma.ReintegroVenta(idVentaBuscar)){
                             System.out.println("Venta reintegrada con éxito");
@@ -348,14 +365,15 @@ public class FarmaciaPurplePharma {
                             try{
                                 Date dateFecha1 = dt.parse(fecha1);
                                 Date dateFecha2 = dt.parse(fecha2);
+                                //dateFecha2.setTime(dateFecha2.getTime() + 86400000L);
                             
-                                String ventas = farma.ListadoVenta(dateFecha1, dateFecha2);
+                                ILista<IMovimiento> listaVentas = farma.ListadoVenta(dateFecha1.getTime(), dateFecha2.getTime());
 
-                                if (ventas == "" || ventas == null){
+                                if (listaVentas == null){
                                     System.out.println("No hay ventas en ese rango de fechas");
                                 }
                                 else{
-                                    System.out.println(ventas);
+                                    System.out.println(listaVentas.toString());
                                 }
                             }
                             catch(Exception ex){

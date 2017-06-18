@@ -9,8 +9,6 @@ package Interfaces;
  * @param <T> Tipo del árbol
  * @author Lithium582
 **/
-import java.util.LinkedList;
-
 public interface IArbol<T> {
 
     /**
@@ -22,8 +20,6 @@ public interface IArbol<T> {
 
     public boolean insertar(INodoArbol<T> pNodo);
 
- 
-
     /**
      * Busca un elemento dentro del árbol.
      *
@@ -31,6 +27,16 @@ public interface IArbol<T> {
      * @return Nodo con la etiqueta buscada o null si no existe
      */
     public INodoArbol<T> buscar(Comparable pEtiqueta);
+    
+    /**
+     * Busca los elementos de los nodos cuyo ID se encuentre en medio de los dos valores ingresados
+     *
+     * @param pValorMinimo Valor mínimo buscado
+     * @param pValorMaximo Valor máximo buscado
+     * @param pListaRetorno Lista que se cargará con los nodos cuyo parámetro coincida con el valor buscado
+     */
+    public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno);
+
     
     /**
      * Busca un elemento por el atributo recibido por parámetro

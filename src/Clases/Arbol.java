@@ -54,6 +54,14 @@ public class Arbol<T> implements IArbol<T> {
         }
     }
     
+    @Override
+    public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno){
+        if (!esVacio()){
+            raiz.buscarInRango(pValorMinimo, pValorMaximo,pListaRetorno);
+        }
+    }
+    
+    @Override
     public String buscarXAtributo(String pAttr, String pStringBuscado){
         if (esVacio()){
             return "";
@@ -152,6 +160,15 @@ public class Arbol<T> implements IArbol<T> {
             return -1;
         } else {
             return raiz.getHojas();
+        }
+    }
+    
+    @Override
+    public String toString(){
+        if (esVacio()) {
+            return null;
+        } else {
+            return raiz.printInOrden();
         }
     }
     

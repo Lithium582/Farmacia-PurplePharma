@@ -397,26 +397,23 @@ public class Farmacia implements IFarmacia {
     
     //Sin implementar
     @Override
-    public String ListadoVenta(Date pFechaComienzo, Date pFechaFin) {
-        String cadenaRetorno = "LOL";
-//        if (listaVentas.esVacia()) {
-//            return "";
-//        } else {
-//            
-//            INodoLista<IMovimiento> aux = listaVentas.getPrimero();
-//            while (aux != null) {
-//                Date fechaVenta = aux.getObjeto().GetFecha();
-//                Long longFComienzo = pFechaComienzo.getTime();
-//                Long longFFin = pFechaFin.getTime();
-//                Long fVenta = fechaVenta.getTime();
-//                
-//                if (longFComienzo <= fVenta && longFFin >= fVenta) {
-//                    cadenaRetorno += aux.getObjeto().toString() + "\n";
-//                }
-//                aux = aux.getSiguiente();
-//            }
-//        }
-        return cadenaRetorno;
+    public ILista<IMovimiento> ListadoVenta(Long pFechaComienzo, Long pFechaFin) {
+        ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+        
+        if (listaVentas.esVacia()) {
+            return null;
+       }
+       else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
+            String str = "";
+            while(nodoActual != null){
+                nodoActual.getObjeto().buscarInRango(pFechaComienzo,pFechaFin,listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+       }
     }
     
     /**

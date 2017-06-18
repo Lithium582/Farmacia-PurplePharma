@@ -179,7 +179,7 @@ public interface IFarmacia {
      * @return Lista conteniendo todos los productos vendido entre
      * esas dos fechas
      */
-    public String ListadoVenta(Date pFechaComienzo, Date pFechaFin);
+    public ILista<IMovimiento> ListadoVenta(Long pFechaComienzo, Long pFechaFin);
     
     /**
      * Mediante la carga de un archivo con extensión .csv,

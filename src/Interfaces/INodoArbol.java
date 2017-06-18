@@ -9,7 +9,6 @@ package Interfaces;
  * @T tipo
  * @author Lithium582
 **/
-import java.util.LinkedList;
 
 public interface INodoArbol<T> {
 
@@ -55,16 +54,34 @@ public interface INodoArbol<T> {
      * @return Elemento encontrado. En caso de no encontrarlo, retorna nulo.
      */
     public INodoArbol buscar(Comparable pEtiqueta);
+    
+    /**
+     * Busca los elementos de los nodos cuyo ID se encuentre en medio de los dos valores ingresados
+     *
+     * @param pValorMinimo Valor mínimo buscado
+     * @param pValorMaximo Valor máximo buscado
+     * @param pListaRetorno Lista que se cargará con los nodos cuyo parámetro coincida con el valor buscado
+     */
+    public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno);
 
     /**
      * Busca un elemento por el atributo recibido por parámetro
      *
-     * @param pEtiqueta ID del elemento que se quiere buscar
+     * @param pStringBuscado ID del elemento que se quiere buscar
      * @param pAttr Nombre del atributo de la clase por el cual debe buscar
      * @return Nodo con la etiqueta buscada o null si no existe
      */
-    public String buscarXAtributo(String pAttr, String pStringBuscado);
+    public String buscarXAtributo(String pStringBuscado, String pAttr);
     
+    /**
+     * Busca los elementos por el atributo recibido por parámetro
+     *
+     * @param aParam Nombre del atributo de la clase por el cual debe buscar
+     * @param pValorParametro Valor del atributo buscado
+     * @param pListaRetorno Lista que se cargará con los nodos cuyo parámetro coincida con el valor buscado
+     */
+    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno);
+            
     /**
      * Inserta un elemento dentro del arbol.
      *
@@ -144,4 +161,9 @@ public interface INodoArbol<T> {
      */
     public INodoArbol lexicoGraficamenteAnterior(Comparable pClave);
 
+    /**
+     * Retorna la Información de todos los datos de los nodos de un árbol
+     * @return Información de todos los datos de los nodos de un árbol
+     */
+    public String printInOrden();
 }

@@ -116,7 +116,8 @@ public class NodoArbol<T> implements INodoArbol<T> {
         }
     }
     
-    public String buscarXAtributo(String pAttr, String pStringBuscado){
+    @Override
+    public String buscarXAtributo(String pStringBuscado, String pAttr){
         try{
             String strReturn = "";
             Class c = this.datos.getClass();
@@ -150,6 +151,67 @@ public class NodoArbol<T> implements INodoArbol<T> {
         }
     }
 
+    @Override
+    public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno){
+        if (pListaRetorno == null){
+            pListaRetorno = new Lista<T>();
+        }
+        
+        Boolean a = this.etiqueta.compareTo(pValorMaximo) < 0;
+        Boolean b = this.etiqueta.compareTo(pValorMinimo) > 0;
+        Boolean c = this.etiqueta.compareTo(pValorMinimo) == 0;
+        Boolean d = this.etiqueta.compareTo(pValorMaximo) == 0;
+        
+        if((a && b) || (c || d)){
+            NodoLista<T> objNuevoNodo = new NodoLista<T>(this.datos,this.etiqueta);
+            pListaRetorno.Insertar(objNuevoNodo);
+        }
+        
+        if(b){
+            if(this.hijoIzq != null){
+                hijoIzq.buscarInRango(pValorMinimo, pValorMaximo, pListaRetorno);
+            }
+        }
+            
+        if(a){
+            if(this.hijoDer != null){
+            hijoDer.buscarInRango(pValorMinimo, pValorMaximo, pListaRetorno);
+            }
+        }
+        
+    }
+    
+   @Override
+    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno){
+        try {
+            if (pListaRetorno == null){
+                pListaRetorno = new Lista<T>();
+            }
+            Class c = this.datos.getClass();
+            Field f;
+            f = c.getDeclaredField(aParam);
+            f.setAccessible(true);
+            //System.out.print(f.getType());
+            
+            String val = (String) f.get(this.datos);
+
+            if (val.contains(pValorParametro)) {
+                pListaRetorno.Insertar(new NodoLista(this.datos,this.etiqueta));
+            }
+            
+            if (this.hijoIzq != null) {
+                this.hijoIzq.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
+            }
+            
+            if (this.hijoDer != null) {
+                this.hijoDer.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
+            } 
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * @return recorrida en inorden del subArbol que cuelga del elemento actual
      */
@@ -224,55 +286,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
         return elHijo;                  //ElHijo quedará en lugar de this
         
     }
-//    
-//   @Override
-//    public INodoArbol<T> eliminar(Comparable pEtiqueta) {
-//        if (pEtiqueta.compareTo(this.getEtiqueta()) < 0) {
-//            if (this.hijoIzq != null) {
-//                this.hijoIzq = hijoIzq.eliminar(pEtiqueta);
-//            }
-//            return this;
-//        }
-//
-//        if (pEtiqueta.compareTo(this.getEtiqueta()) > 0) {
-//            if (this.hijoDer != null) {
-//                this.hijoDer = hijoDer.eliminar(pEtiqueta);
-//
-//            }
-//            return this;
-//        }
-//
-//        return quitaElNodo();
-//    }
-//    
-//    private INodoArbol quitaElNodo() {
-//        if (hijoIzq == null) {    // solo tiene un hijo o es hoja
-//            return hijoDer;
-//        }
-//
-//        if (hijoDer == null) { // solo tiene un hijo o es hoja
-//            return hijoIzq;
-//        }
-//// tiene los dos hijos, buscamos el lexicograficamente anterior
-//        INodoArbol elHijo = hijoIzq;
-//        INodoArbol elPadre = this;
-//
-//        while (elHijo.getHijoDer() != null) {
-//            elPadre = elHijo;
-//            elHijo = elHijo.getHijoDer();
-//        }
-//
-//        if (elPadre != this) {
-//            elPadre.setHijoDer(elHijo.getHijoIzq());
-//            elHijo.setHijoIzq(hijoIzq);
-//        }
-//
-//        elHijo.setHijoDer(hijoDer);
-//        setHijoIzq(null);  // para que no queden referencias y ayudar al collector
-//        setHijoDer(null);
-//        return elHijo;
-//    }
-
+    
  @Override
     public INodoArbol lexicoGraficamenteAnterior(Comparable pClave){
         INodoArbol res1 = null;
@@ -398,6 +412,25 @@ public class NodoArbol<T> implements INodoArbol<T> {
             retorno = 1;
         }
         return retorno;
+    }
+    
+    @Override
+    public String printInOrden(){
+        StringBuilder tempStr = new StringBuilder();
+        if (hijoIzq != null) {
+            tempStr.append(this.hijoIzq.printInOrden());
+        }
+        tempStr.append(this.toString());
+        if (hijoDer != null) {
+            tempStr.append(this.hijoDer.printInOrden());
+        }
+
+        return tempStr.toString();
+    }
+    
+    @Override
+    public String toString(){
+        return this.datos.toString();
     }
     
     // </editor-fold>
