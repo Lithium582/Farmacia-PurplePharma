@@ -75,7 +75,7 @@ public interface IFarmacia {
      * @param id ID del Artículo a buscar.
      * @return Artículo encontrado.
      */
-    public IArticulo BuscarArticuloXID(Comparable id);
+    public IArticulo BuscarArticuloXID(Comparable id, String[] pAreaProducto);
 
     /**
      * Busca un Artículo por su descripción.

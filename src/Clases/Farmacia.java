@@ -104,7 +104,7 @@ public class Farmacia implements IFarmacia {
         for (int i = 1; i < elementos.length; i++){
             String[] linea = elementos[i].split(";");
             
-            if (linea.length == 9){
+            if (linea.length == 11){
                 try{
                     Comparable id = Integer.parseInt(linea[0].trim());
                     Date fecha_Creacion = FormatoFecha(linea[1].trim());
@@ -115,26 +115,8 @@ public class Farmacia implements IFarmacia {
                     Boolean estado = VerificarEstado(linea[6].trim());
                     boolean refrigerado = VerificarBooleano(linea[7].trim());
                     boolean receta = VerificarBooleano(linea[8].trim());
-                    String areaAplicacion = "";
-                    Integer anoVencimiento = 2017;
-                    
-                    int res = i%3;
-                    int res2 = i%2;
-                    int res3 = i%5;
-                    
-                    if (res3 == 0){
-                        areaAplicacion = "MG";
-                        anoVencimiento = 2017;
-                    }else if (res == 0){
-                        areaAplicacion = "CAR";
-                        anoVencimiento = 2018;
-                    }else if(res2 == 0){
-                        areaAplicacion = "END";
-                        anoVencimiento = 2020;
-                    }else{
-                        areaAplicacion = "-1";
-                        anoVencimiento = 2016;
-                    }
+                    Integer anoVencimiento = Integer.parseInt(linea[9].trim());
+                    String areaAplicacion = RemoverCaracteres(linea[10].trim()).toUpperCase();
 
                     IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,anoVencimiento,estado,refrigerado,receta);
 
@@ -170,7 +152,7 @@ public class Farmacia implements IFarmacia {
             if (linea.length == 2){
                 Integer idArticulo = Integer.parseInt(linea[0].trim());
                 Integer stock = Integer.parseInt(linea[1].trim());
-                IArticulo objArticulo = BuscarArticuloXID(idArticulo);
+                IArticulo objArticulo = BuscarArticuloXID(idArticulo,new String[1]);
                 
                 if(objArticulo != null){
                     Integer stockActual = objArticulo.getStock();
@@ -197,7 +179,7 @@ public class Farmacia implements IFarmacia {
     }
 
     @Override
-    public IArticulo BuscarArticuloXID(Comparable pId) {
+    public IArticulo BuscarArticuloXID(Comparable pId, String[] pAreaProducto) {
        if (listaArticulos.esVacia()) {
             return null;
        }
@@ -209,7 +191,7 @@ public class Farmacia implements IFarmacia {
                 
                 if(nodoArbol != null){
                     IArticulo prodBuscado = nodoArbol.getDatos();
-                    
+                    pAreaProducto[0] = nodoActual.getEtiqueta().toString();
                     return prodBuscado;
                 }
                 nodoActual = nodoActual.getSiguiente();
@@ -407,7 +389,7 @@ public class Farmacia implements IFarmacia {
                 if(nodoArbol != null){
                     IMovimiento ventaBuscada = nodoArbol.getDatos();
                     
-                    IArticulo objArticuloBuscado = BuscarArticuloXID(ventaBuscada.GetIdArticulo());
+                    IArticulo objArticuloBuscado = BuscarArticuloXID(ventaBuscada.GetIdArticulo(),new String[1]);
                     
                     if (objArticuloBuscado == null){
                         return false;
@@ -456,7 +438,6 @@ public class Farmacia implements IFarmacia {
         return "Lista aún no inicializado";
     }
     
-    //Sin implementar
     @Override
     public ILista<IMovimiento> ListadoVenta(Long pFechaComienzo, Long pFechaFin) {
         ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
@@ -546,7 +527,18 @@ public class Farmacia implements IFarmacia {
                //System.out.println(ex.getMessage());
            }
        }
-    
+           
+       private String RemoverCaracteres(String pCadena) {
+            String caracteresRaros = "áàäéèëíìïóòöúùuñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑçÇ";
+            String caracteresOriginales = "aaaeeeiiiooouuunAAAEEEIIIOOOUUUNcC";
+            
+            String strRetorno = pCadena;
+            for (int i=0; i< caracteresRaros.length(); i++) {
+                // Reemplazamos los caracteres especiales.
+                strRetorno = strRetorno.replace(caracteresRaros.charAt(i), caracteresOriginales.charAt(i));
+            }
+            return strRetorno;
+        }
     //</editor-fold>
 
     @Override

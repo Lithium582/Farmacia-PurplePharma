@@ -36,7 +36,7 @@ public class FarmaciaPurplePharma {
 //            Ventana v = new Ventana();
 //            v.show();
             
-            Farmacia farma = new Farmacia("UCUPharma","Wall Street 1929","666-666-6666");
+            Farmacia farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
             // TODO code application logic here
 //            
 //            ///////////////////////////////////////////////////////////////////////////////
@@ -229,12 +229,14 @@ public class FarmaciaPurplePharma {
                                     System.out.println("Ingrese el ID del producto buscado");
                                     Integer idBusqueda = Integer.parseInt(br.readLine());
                                     
-                                    IArticulo a = farma.BuscarArticuloXID(idBusqueda);
+                                    String[] areaProducto = new String[1];
+                                    IArticulo a = farma.BuscarArticuloXID(idBusqueda, areaProducto);
                                     
                                     if (a == null){
                                         System.out.println("Artículo inexistente");
                                     }
                                     else{
+                                        System.out.println("Área " + areaProducto[0].toUpperCase());
                                         System.out.println(a.toString());
                                     }
                                     
@@ -310,7 +312,8 @@ public class FarmaciaPurplePharma {
                         System.out.println("Ingrese el ID del producto a vender");
                         Integer idBuscar = Integer.parseInt(br.readLine());
                         
-                        IArticulo objArticulo = farma.BuscarArticuloXID(idBuscar);
+                        String[] areaProducto = new String[1];
+                        IArticulo objArticulo = farma.BuscarArticuloXID(idBuscar, areaProducto);
                         
                         if (objArticulo == null){
                             System.out.println("El artículo no se ha podido encontrar");
@@ -320,6 +323,7 @@ public class FarmaciaPurplePharma {
                         }
                         else{
                             System.out.println("Artículo encontrado");
+                            System.out.println("Área " + areaProducto[0].toUpperCase());
                             System.out.println(objArticulo.toString());
                             System.out.println("Ingrese la cantidad de artículos que quiere vender");
                             Integer intCantidad = Integer.parseInt(br.readLine());
@@ -415,7 +419,6 @@ public class FarmaciaPurplePharma {
                         System.out.println("----------");
                         System.out.println("| Bái :D |");
                         System.out.println("----------");
-                        br.readLine();
                         
                         break;
                     }

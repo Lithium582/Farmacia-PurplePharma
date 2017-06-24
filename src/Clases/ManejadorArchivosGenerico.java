@@ -1,13 +1,6 @@
 package Clases;
 
-
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ManejadorArchivosGenerico {
@@ -38,11 +31,12 @@ public class ManejadorArchivosGenerico {
 	}
 
 	public static String[] leerArchivo(String nombreCompletoArchivo) {
-		FileReader fr;
+		FileInputStream fr;
 		ArrayList<String> listaLineasArchivo = new ArrayList<String>();
 		try {
-			fr = new FileReader(nombreCompletoArchivo);
-			BufferedReader br = new BufferedReader(fr);
+			fr = new FileInputStream(nombreCompletoArchivo);
+                        
+			BufferedReader br = new BufferedReader(new InputStreamReader (fr, "cp1252"));
 			String lineaActual = br.readLine();
 			while (lineaActual != null) {
 				listaLineasArchivo.add(lineaActual);
