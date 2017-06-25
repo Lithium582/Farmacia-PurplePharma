@@ -150,6 +150,44 @@ public class NodoArbol<T> implements INodoArbol<T> {
             return "";
         }
     }
+    
+    @Override
+    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno){
+        try {
+            if (pListaRetorno == null){
+                pListaRetorno = new Lista<T>();
+            }
+            Class c = this.datos.getClass();
+            Field f;
+            
+            try{
+                f = c.getDeclaredField(aParam);
+            }
+            catch(Exception ex){
+                return;
+            }
+            
+            f.setAccessible(true);
+            //System.out.print(f.getType());
+
+            String val = f.get(this.datos).toString();
+
+            if (val.toLowerCase().contains(pValorParametro.toLowerCase())) {
+                pListaRetorno.Insertar(new NodoLista(this.datos,val));
+            }
+
+            if (this.hijoIzq != null) {
+                this.hijoIzq.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
+            }
+
+            if (this.hijoDer != null) {
+                this.hijoDer.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+    }
 
     @Override
     public void buscarInRango(Comparable pValorMinimo, Comparable pValorMaximo, ILista<T> pListaRetorno){
@@ -179,37 +217,6 @@ public class NodoArbol<T> implements INodoArbol<T> {
             }
         }
         
-    }
-    
-   @Override
-    public void buscarXAtributo(String aParam, String pValorParametro, ILista<T> pListaRetorno){
-        try {
-            if (pListaRetorno == null){
-                pListaRetorno = new Lista<T>();
-            }
-            Class c = this.datos.getClass();
-            Field f;
-            f = c.getDeclaredField(aParam);
-            f.setAccessible(true);
-            //System.out.print(f.getType());
-            
-            String val = f.get(this.datos).toString();
-
-            if (val.toLowerCase().contains(pValorParametro.toLowerCase())) {
-                pListaRetorno.Insertar(new NodoLista(this.datos,this.etiqueta));
-            }
-            
-            if (this.hijoIzq != null) {
-                this.hijoIzq.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
-            }
-            
-            if (this.hijoDer != null) {
-                this.hijoDer.buscarXAtributo(aParam, pValorParametro, pListaRetorno);
-            } 
-        }
-        catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
     }
     
     /**
@@ -430,7 +437,7 @@ public class NodoArbol<T> implements INodoArbol<T> {
     
     @Override
     public String toString(){
-        return this.datos.toString();
+        return "\t" + this.datos.toString();
     }
     
     // </editor-fold>

@@ -103,10 +103,13 @@ public class Arbol<T> implements IArbol<T> {
     }
 
     @Override
-    public void eliminar(Comparable pEtiqueta) {
+    public Boolean eliminar(Comparable pEtiqueta) {
         if (!esVacio()) {
             this.raiz = this.raiz.eliminar(pEtiqueta);
+            return true;
         }
+        
+        return false;
     }
     
     @Override

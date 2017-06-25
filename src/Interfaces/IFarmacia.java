@@ -86,6 +86,13 @@ public interface IFarmacia {
     public String buscarXDescripcion(String pDescripcion);
     
     /**
+     * Retorna la cantidad de artículos en STOCK
+     *
+     * @return Cantidad de Artículos en stock
+     */
+    public Integer CantidadDeArticulos();
+    
+    /**
      * Busca a todos los artículos cuya descripción coincida con el parámetro recibido.
      *
      * @param pDescripcion Descripción del Artículo.
@@ -136,6 +143,14 @@ public interface IFarmacia {
     public Boolean EliminarArticulo(Comparable pId);
 
     /**
+     * Elimina un artículo de la lista
+     *
+     * @param pArea Área a eliminar
+     * @return Eliminación realizada con éxito.
+     */
+    public Boolean EliminarArea(String pArea);
+    
+    /**
      * Guarda la venta recibida por parámetro en la lista
      * y modifica la lista de artículos en consecuencia del
      * artículo vendido.
@@ -182,6 +197,24 @@ public interface IFarmacia {
      */
     public String retornarVentas();
 
+    /**
+     * Retorna los artículos pertenecientes a un área determinada
+     * @return String conteniendo los items de la lista.
+     */
+    public String listarArticulosXArea(String pArea);
+    
+    /**
+     * Retorna las ventas pertenecientes a un área determinada
+     * @return String conteniendo los items de la lista.
+     */
+    public String listarVentasXArea(String pArea);
+    
+    /**
+     * Retorna las ventas de un artículo determinado
+     * @return String conteniendo los items de la lista.
+     */
+    public ILista<IMovimiento> buscarVentasXProducto(Integer pIDProducto);
+    
     /**
      * Dado un separador, imprime las ventas separadas por el caracter pasado por parámetro.
      *

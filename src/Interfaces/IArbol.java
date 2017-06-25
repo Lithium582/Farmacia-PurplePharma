@@ -61,7 +61,7 @@ public interface IArbol<T> {
      * 
      * @param pEtiqueta ID del elemento que se quiere eliminar
      */
-    public void eliminar(Comparable pEtiqueta);
+    public Boolean eliminar(Comparable pEtiqueta);
     
     /**
      * Retorna todas las etiquetas del árbol en inOrden

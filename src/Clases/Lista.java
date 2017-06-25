@@ -131,7 +131,7 @@ public class Lista<T> implements ILista<T> {
         }
         return aux;
     }
-
+    
     @Override
     public String Print(String pSeparador) {
         String aux = "";
@@ -139,8 +139,26 @@ public class Lista<T> implements ILista<T> {
             return "";
         } else {
             INodoLista<T> temp = primero;
+            aux += "\t" + temp.getObjeto().toString() + "\n";
+            while (temp.getSiguiente() != null) {
+                //aux += temp.getSiguiente().getEtiqueta().toString() + ":\n";
+                aux += "\t" + temp.getSiguiente().getObjeto().toString() + "\n";
+                temp = temp.getSiguiente();
+            }
+
+        }
+        return aux;
+    }
+
+    @Override
+    public String PrintConTitulo(String pSeparador) {
+        String aux = "";
+        if (esVacia()) {
+            return "";
+        } else {
+            INodoLista<T> temp = primero;
             aux = temp.getEtiqueta().toString() + ":\n";
-            aux += temp.getObjeto().toString() + "\n";
+            aux += "\t" + temp.getObjeto().toString() + "\n";
             while (temp.getSiguiente() != null) {
                 aux += temp.getSiguiente().getEtiqueta().toString() + ":\n";
                 aux += temp.getSiguiente().getObjeto().toString() + "\n";

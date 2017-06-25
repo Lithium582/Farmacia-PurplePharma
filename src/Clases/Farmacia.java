@@ -220,6 +220,24 @@ public class Farmacia implements IFarmacia {
     }
     
     @Override
+    public Integer CantidadDeArticulos() {
+        if (listaArticulos.esVacia()) {
+            return -1;
+       }
+       else {
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            Integer intRetorno = 0;
+            while(nodoActual != null){
+                intRetorno += nodoActual.getObjeto().getTamano();
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return intRetorno;
+       }
+    }
+    
+    @Override
     public ILista<IArticulo> listarXDescripcion(String pDescripcion) {
         if (listaArticulos.esVacia()) {
             return null;
@@ -348,7 +366,9 @@ public class Farmacia implements IFarmacia {
                     return false;
                 }
                 else{
-                    return listaArticulos.Borrar(pId);
+                    Boolean b = aux.getObjeto().eliminar(pId);
+                    return b;
+                    //return listaArticulos.Borrar(pId);
                 }
             }
         }
@@ -357,6 +377,19 @@ public class Farmacia implements IFarmacia {
         return false;
     }
 
+    @Override
+    public Boolean EliminarArea(String pArea) {
+        pArea = RemoverCaracteres(pArea).toUpperCase();
+        INodoLista<IArbol<IArticulo>> buscado = listaArticulos.Buscar(pArea);
+        
+        if (buscado == null){
+            System.out.println("Área inexistente");
+            return false;
+        }
+        
+        return listaArticulos.Borrar(pArea);
+    }
+    
     @Override
     public Boolean GuardarVenta(IMovimiento pVenta, Comparable pArea) {
         INodoArbol<IMovimiento> objNodo = new NodoArbol<IMovimiento>(pVenta.getID(), pVenta);
@@ -417,11 +450,76 @@ public class Farmacia implements IFarmacia {
 
     @Override
     public String retornarArticulos(String pSeparador) {
-        if(listaArticulos != null){
-            return listaArticulos.Print(pSeparador);
-        }
+        String strRetorno = "";
         
-        return "Lista aún no inicializado";
+        if (listaArticulos.esVacia()) {
+            return "Lista aún no inicializado";
+        }
+        else {
+            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                listaRetorno = new Lista<IArticulo>();
+                nodoActual.getObjeto().buscarXAtributo("nombre", "", listaRetorno);
+                strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+                strRetorno += listaRetorno.Print("-");
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return strRetorno;
+        }
+    }
+    
+    @Override
+    public String listarArticulosXArea(String pArea) {
+        String strRetorno = "";
+        
+        if (listaArticulos.esVacia()) {
+            return "Lista aún no inicializado";
+        }
+        else {
+            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                    strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+                    strRetorno += listaRetorno.Print("-");
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return strRetorno;
+        }
+    }
+    
+    @Override
+    public String listarVentasXArea(String pArea) {
+        String strRetorno = "";
+        
+        if (listaArticulos.esVacia()) {
+            return "Lista aún no inicializado";
+        }
+        else {
+            ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                    strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+                    strRetorno += listaRetorno.Print("-");
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return strRetorno;
+        }
     }
     
     @Override
@@ -436,6 +534,25 @@ public class Farmacia implements IFarmacia {
         }
         
         return "Lista aún no inicializado";
+    }
+    
+    @Override
+    public ILista<IMovimiento> buscarVentasXProducto(Integer pIDProducto){
+        ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+        if (listaVentas.esVacia()) {
+            listaRetorno = null;
+       }
+       else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
+            
+            while(nodoActual != null){
+                nodoActual.getObjeto().buscarXAtributo("idArticulo", pIDProducto.toString(),listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+       }
+        
+        return listaRetorno;
     }
     
     @Override

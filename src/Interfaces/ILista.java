@@ -44,11 +44,20 @@ public interface ILista<T> {
      * Retorna un String con las keys separadas por el separador pasado por
      * parámetro.
      *
-     * @param separator Separa las keys
+     * @param pSeparador Separa las keys
      * @return
      */
-    public String Print(String separator);
+    public String Print(String pSeparador);
 
+    /**
+     * Retorna un String con las keys separadas por el separador pasado por
+     * parámetro.
+     *
+     * @param pSeparador Separa las keys
+     * @return
+     */
+    public String PrintConTitulo(String pSeparador);
+    
     /**
      * Retorna la cantidad de elementos de la lista. En caso de que la lista
      * este vac�a, retornar 0.
