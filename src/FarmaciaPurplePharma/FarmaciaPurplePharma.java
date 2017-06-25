@@ -234,7 +234,12 @@ public class FarmaciaPurplePharma {
                                 case 0:{
                                     Integer intObt = farma.CantidadDeArticulos();
                                     
-                                    System.out.println("La farmacia posee " + intObt.toString() + " artículos distintos");
+                                    if (intObt == -1){
+                                        System.out.println("La farmacia no posee artículos");
+                                    }else{
+                                        System.out.println("La farmacia posee " + intObt.toString() + " artículos distintos");
+                                    }
+                                    
                                     break;
                                 }
                                 case 1:{
