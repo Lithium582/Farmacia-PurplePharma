@@ -152,11 +152,27 @@ public class Farmacia implements IFarmacia {
             if (linea.length == 2){
                 Integer idArticulo = Integer.parseInt(linea[0].trim());
                 Integer stock = Integer.parseInt(linea[1].trim());
-                IArticulo objArticulo = BuscarArticuloXID(idArticulo,new String[1]);
+                String strArea[] = new String[1];
+                
+                IArticulo objArticulo = BuscarArticuloXID(idArticulo,strArea);
                 
                 if(objArticulo != null){
                     Integer stockActual = objArticulo.getStock();
                     objArticulo.setStock(stockActual + stock);
+                    Movimiento objCompra = new Movimiento(objArticulo,stock);
+                    
+                    INodoLista<IArbol<IMovimiento>> objNodoLista = this.listaCompras.Buscar(strArea[0]);
+                    INodoArbol<IMovimiento> nodoNuevo = new NodoArbol<IMovimiento>(objCompra.getID(),objCompra);
+                    
+                    if (objNodoLista == null){
+                        IArbol<IMovimiento> objNuevoArbol = new Arbol<IMovimiento>(nodoNuevo);
+                        objNodoLista = new NodoLista<IArbol<IMovimiento>>(objNuevoArbol, strArea[0]);
+                    
+                        listaCompras.Insertar(objNodoLista);
+                    }
+                    else{
+                        objNodoLista.getObjeto().insertar(nodoNuevo);
+                    }
                 }
                 else{
                     cantErroneos++;
@@ -501,8 +517,8 @@ public class Farmacia implements IFarmacia {
     public String listarVentasXArea(String pArea) {
         String strRetorno = "";
         
-        if (listaArticulos.esVacia()) {
-            return "Lista aún no inicializado";
+        if (listaVentas.esVacia()) {
+            return "";
         }
         else {
             ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
@@ -512,7 +528,36 @@ public class Farmacia implements IFarmacia {
                 if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
                     nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
                     strRetorno += nodoActual.getEtiqueta().toString() + "\n";
-                    strRetorno += listaRetorno.Print("-");
+                    if (listaRetorno.CantidadDeElementos() > 0){
+                        strRetorno += listaRetorno.Print("-");
+                    }
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return strRetorno;
+        }
+    }
+    
+    @Override
+    public String listarComprasXArea(String pArea) {
+        String strRetorno = "";
+        
+        if (listaCompras.esVacia()) {
+            return "";
+        }
+        else {
+            ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaCompras.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                    strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+                    if (listaRetorno.CantidadDeElementos() > 0){
+                        strRetorno += listaRetorno.Print("-");
+                    }
                 }
                 
                 nodoActual = nodoActual.getSiguiente();
@@ -534,6 +579,51 @@ public class Farmacia implements IFarmacia {
         }
         
         return "Lista aún no inicializado";
+    }
+    
+    @Override
+    public Double promedioVentasXArticulo(Integer pIdArticulo){
+        ILista<IMovimiento> listaVentas = buscarVentasXProducto(pIdArticulo);
+        Double promedioTotal = 0D;
+        Long fechaMaxima = 0L;
+        Long fechaMinima = 0L;
+        
+        if (listaVentas == null || listaVentas.CantidadDeElementos() == 0){
+            promedioTotal = 0D;
+        }else{
+            INodoLista<IMovimiento> nodoActual = listaVentas.getPrimero();
+            fechaMinima = nodoActual.getObjeto().GetFecha().getTime();
+            
+            while(nodoActual != null){
+                Long fechaVenta = nodoActual.getObjeto().GetFecha().getTime();
+                if (fechaVenta < fechaMinima){
+                    fechaMinima = fechaVenta;
+                }
+                
+                if (fechaVenta > fechaMaxima){
+                    fechaMaxima = fechaVenta;
+                }
+                
+                promedioTotal += nodoActual.getObjeto().GetCantidad();
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            Date dateFechaMinima = new Date(fechaMinima);
+            Date dateFechaMaxima = new Date(fechaMaxima);
+            
+            Calendar startCalendar = new GregorianCalendar();
+            startCalendar.setTime(dateFechaMinima);
+            Calendar endCalendar = new GregorianCalendar();
+            endCalendar.setTime(dateFechaMaxima);
+
+            int diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR);
+            int diffMonth = (diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH)) + 1;
+            
+            promedioTotal = promedioTotal / diffMonth;
+        }
+        
+        return promedioTotal;
     }
     
     @Override

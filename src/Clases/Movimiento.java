@@ -15,7 +15,7 @@ import java.util.*;
 public class Movimiento implements IMovimiento {
     
     // <editor-fold defaultstate="extended" desc="Atributos">
-        //private static Integer ultimoIDGenerado = 0;
+        private static Integer ultimoIDGenerado = 0;
         private Comparable<Long> id;
         private Date Fecha;
         private Comparable<Integer> idArticulo;
@@ -69,7 +69,13 @@ public class Movimiento implements IMovimiento {
         }
         
         public Movimiento(IArticulo pArticulo, Integer pCantidad){
+//            ultimoIDGenerado++;
             this.Fecha = Calendar.getInstance().getTime();
+            
+//            if(ultimoIDGenerado % 2 == 0){
+//                this.Fecha.setTime(this.Fecha.getTime() + 43200000000L);
+//            }
+            
             this.id = this.Fecha.getTime();
             this.idArticulo = pArticulo.getID();
             this.cantidad = pCantidad;
@@ -86,7 +92,7 @@ public class Movimiento implements IMovimiento {
             cadenaRetorno += " - " + "Fecha: " + dt.format(this.GetFecha());
             cadenaRetorno += " - " + "IDArticulo: " + this.GetIdArticulo();
             cadenaRetorno += " - " + "Cantidad: " + this.GetCantidad();
-            cadenaRetorno += " - " + "Valor final de la Venta: " + this.GetValorFinal();
+            cadenaRetorno += " - " + "Valor final del Movimiento: " + this.GetValorFinal();
 
             return cadenaRetorno;
         }

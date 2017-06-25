@@ -29,8 +29,8 @@ public class FarmaciaPurplePharma {
     **/
     public static void main(String[] args) {
         try{
-//            Ventana v = new Ventana();
-//            v.show();
+            //Ventana v = new Ventana();
+            //v.show();
             
             Farmacia farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
             // TODO code application logic here
@@ -211,7 +211,7 @@ public class FarmaciaPurplePharma {
                     }
                     case 4:{
                         String retorno = farma.retornarArticulos("-");
-                        if (retorno != ""){
+                        if (!retorno.equals("")){
                             System.out.println(retorno);
                         }else{
                             System.out.println("No hay artículos en la lista");
@@ -305,7 +305,7 @@ public class FarmaciaPurplePharma {
                                     
                                     String strArticulos = farma.listarArticulosXArea(areaBuscada);
                                     
-                                    if (strArticulos == ""){
+                                    if (strArticulos.equals("")){
                                         System.out.println("El área " + areaBuscada + " no existe");
                                     }
                                     else{
@@ -482,19 +482,40 @@ public class FarmaciaPurplePharma {
                                 System.out.println("Ingrese el área de Aplicación buscada");
                                 String areaBuscada = br.readLine();
                                     
-                                String strArticulos = farma.listarVentasXArea(areaBuscada);
+                                String strArticulosVenta = farma.listarVentasXArea(areaBuscada);
                                     
-                                if (strArticulos == ""){
-                                    System.out.println("El área " + areaBuscada + " no existe");
+                                if (strArticulosVenta.equals("")){
+                                    System.out.println("No hay ventas en " + areaBuscada);
                                 }
                                 else{
-                                    System.out.println(strArticulos);
+                                    System.out.println("Ventas del área " + strArticulosVenta);
+                                    //System.out.println(strArticulosVenta);
+                                }
+                                
+                                String strArticulosCompra = farma.listarComprasXArea(areaBuscada);
+                                    
+                                if (strArticulosCompra.equals("")){
+                                    System.out.println("No hay compras en " + areaBuscada);
+                                }
+                                else{
+                                    System.out.println("Compras del área " + strArticulosCompra);
+                                    //System.out.println(strArticulosCompra);
                                 }
                                     
                                 break;
                             }
                             case 4:{
-                                System.out.println("No vendiste nada en tres meses. Mejor cerrá");
+                                System.out.println("Ingrese el ID del artículo buscado");
+                                Integer idArticuloBuscado = Integer.parseInt(br.readLine());
+                                
+                                Double promedio = farma.promedioVentasXArticulo(idArticuloBuscado);
+                                
+                                if(promedio.equals(0D)){
+                                    System.out.println("No hay ventas realizadas para el artículo " + idArticuloBuscado.toString());
+                                }
+                                else{
+                                    System.out.println("El promedio de ventas del artículo " + idArticuloBuscado.toString() + " es de " + promedio.toString());
+                                }
                             
                                 break;
                             }

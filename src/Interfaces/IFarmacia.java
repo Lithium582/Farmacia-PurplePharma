@@ -5,7 +5,6 @@
  */
 package Interfaces;
 
-import java.util.Date;
 import Clases.*;
 /**
  *
@@ -73,6 +72,7 @@ public interface IFarmacia {
      * Dado un ID de Artículo, nos indica si existe en el Stock.
      *
      * @param id ID del Artículo a buscar.
+     * @param pAreaProducto Array donde se cargará el nombre del área a la que pertenece el producto buscado
      * @return Artículo encontrado.
      */
     public IArticulo BuscarArticuloXID(Comparable id, String[] pAreaProducto);
@@ -156,6 +156,7 @@ public interface IFarmacia {
      * artículo vendido.
      *
      * @param pVenta Venta realizada
+     * @param pArea Área a la que pertenece la venta
      * @return Venta realizada con éxito
      */
     public Boolean GuardarVenta(IMovimiento pVenta, Comparable pArea);
@@ -198,19 +199,41 @@ public interface IFarmacia {
     public String retornarVentas();
 
     /**
+     * Retorna el promedio general de ventas
+     * 
+     * @param pIdArticulo ID del artículo cuyo promedio de ventas se busca
+     * @return String conteniendo los items de la lista.
+     */
+    public Double promedioVentasXArticulo(Integer pIdArticulo);
+    
+    /**
      * Retorna los artículos pertenecientes a un área determinada
+     * 
+     * @param pArea Área buscada
      * @return String conteniendo los items de la lista.
      */
     public String listarArticulosXArea(String pArea);
     
     /**
      * Retorna las ventas pertenecientes a un área determinada
+     * 
+     * @param pArea Área buscada
      * @return String conteniendo los items de la lista.
      */
     public String listarVentasXArea(String pArea);
     
     /**
+     * Retorna las compras pertenecientes a un área determinada
+     * 
+     * @param pArea Área buscada
+     * @return String conteniendo los items de la lista.
+     */
+    public String listarComprasXArea(String pArea);
+    
+    /**
      * Retorna las ventas de un artículo determinado
+     * 
+     * @param pIDProducto ID del producto cuyas ventas se quieren listar
      * @return String conteniendo los items de la lista.
      */
     public ILista<IMovimiento> buscarVentasXProducto(Integer pIDProducto);
