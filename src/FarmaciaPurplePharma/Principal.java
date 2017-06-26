@@ -6,15 +6,23 @@
 
 package FarmaciaPurplePharma;
 
+import Clases.*;
+import java.io.*;
+import javax.swing.*;
+
 /**
  *
  * @author Lithium582
  */
 public class Principal extends javax.swing.JFrame {
 
+    private Farmacia farma;
+    
     /** Creates new form Principal */
     public Principal() {
         initComponents();
+        
+        farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
     }
 
     /** This method is called from within the constructor to
@@ -27,90 +35,102 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jmCargaDeArchivo = new javax.swing.JMenu();
+        jmCargarArticulos = new javax.swing.JMenuItem();
+        jmCargarStock = new javax.swing.JMenuItem();
+        jmArticulos = new javax.swing.JMenu();
+        jmNuevoArticulo = new javax.swing.JMenuItem();
+        jmListarTodosArticulos = new javax.swing.JMenuItem();
+        jmBuscarArticulo = new javax.swing.JMenu();
+        jmBuscarArticuloXCantidad = new javax.swing.JMenuItem();
+        jmBusquedaGenerica = new javax.swing.JMenuItem();
+        jmEliminarArticulo = new javax.swing.JMenuItem();
+        jmMovimientos = new javax.swing.JMenu();
+        jmNuevaVenta = new javax.swing.JMenuItem();
+        jmDevolverVenta = new javax.swing.JMenuItem();
+        jmReportes = new javax.swing.JMenu();
+        jmListarTodasVentas = new javax.swing.JMenuItem();
+        jmReportesPorFecha = new javax.swing.JMenuItem();
+        jmReportesGenericos = new javax.swing.JMenuItem();
+        jmAcercaDe = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PurplePharma Principal");
+        setBackground(new java.awt.Color(0, 0, 0));
 
-        jMenu1.setText("Carga de Archivos");
+        jmCargaDeArchivo.setText("Carga de Archivos");
 
-        jMenuItem1.setText("Cargar Artículos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmCargarArticulos.setText("Cargar Artículos");
+        jmCargarArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmCargarArticulosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jmCargaDeArchivo.add(jmCargarArticulos);
 
-        jMenuItem2.setText("Cargar Stock");
-        jMenu1.add(jMenuItem2);
+        jmCargarStock.setText("Cargar Stock");
+        jmCargarStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmCargarStockActionPerformed(evt);
+            }
+        });
+        jmCargaDeArchivo.add(jmCargarStock);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jmCargaDeArchivo);
 
-        jMenu2.setText("Artículos");
+        jmArticulos.setText("Artículos");
 
-        jMenuItem3.setText("Nuevo");
-        jMenu2.add(jMenuItem3);
+        jmNuevoArticulo.setText("Nuevo");
+        jmNuevoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmNuevoArticuloActionPerformed(evt);
+            }
+        });
+        jmArticulos.add(jmNuevoArticulo);
 
-        jMenuItem4.setText("Listar Todos");
-        jMenu2.add(jMenuItem4);
+        jmListarTodosArticulos.setText("Listar Todos");
+        jmArticulos.add(jmListarTodosArticulos);
 
-        jMenu5.setText("Buscar");
+        jmBuscarArticulo.setText("Buscar");
 
-        jMenuItem5.setText("Cantidad de Artículos");
-        jMenu5.add(jMenuItem5);
+        jmBuscarArticuloXCantidad.setText("Cantidad de Artículos");
+        jmBuscarArticulo.add(jmBuscarArticuloXCantidad);
 
-        jMenuItem12.setText("Búsqueda Genérica");
-        jMenu5.add(jMenuItem12);
+        jmBusquedaGenerica.setText("Búsqueda Genérica");
+        jmBuscarArticulo.add(jmBusquedaGenerica);
 
-        jMenu2.add(jMenu5);
+        jmArticulos.add(jmBuscarArticulo);
 
-        jMenuItem11.setText("Eliminar");
-        jMenu2.add(jMenuItem11);
+        jmEliminarArticulo.setText("Eliminar");
+        jmArticulos.add(jmEliminarArticulo);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(jmArticulos);
 
-        jMenu3.setText("Movimientos");
+        jmMovimientos.setText("Movimientos");
 
-        jMenuItem7.setText("Nueva Venta");
-        jMenu3.add(jMenuItem7);
+        jmNuevaVenta.setText("Nueva Venta");
+        jmMovimientos.add(jmNuevaVenta);
 
-        jMenuItem8.setText("Devolver Venta");
-        jMenu3.add(jMenuItem8);
+        jmDevolverVenta.setText("Devolver Venta");
+        jmMovimientos.add(jmDevolverVenta);
 
-        jMenu6.setText("Reportes");
+        jmReportes.setText("Reportes");
 
-        jMenuItem6.setText("Listar Todas");
-        jMenu6.add(jMenuItem6);
+        jmListarTodasVentas.setText("Listar Todas");
+        jmReportes.add(jmListarTodasVentas);
 
-        jMenuItem10.setText("Reportes por Fecha");
-        jMenu6.add(jMenuItem10);
+        jmReportesPorFecha.setText("Reportes por Fecha");
+        jmReportes.add(jmReportesPorFecha);
 
-        jMenuItem13.setText("Reportes Genéricos");
-        jMenu6.add(jMenuItem13);
+        jmReportesGenericos.setText("Reportes Genéricos");
+        jmReportes.add(jmReportesGenericos);
 
-        jMenu3.add(jMenu6);
+        jmMovimientos.add(jmReportes);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(jmMovimientos);
 
-        jMenu4.setText("Acerca De");
-        jMenuBar1.add(jMenu4);
+        jmAcercaDe.setText("Acerca De");
+        jMenuBar1.add(jmAcercaDe);
 
         setJMenuBar(jMenuBar1);
 
@@ -128,9 +148,57 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jmCargarArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCargarArticulosActionPerformed
+
+        ////Cerrar el form
+        //this.dispose();
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        
+        /*
+        ERROR_MESSAGE
+        INFORMATION_MESSAGE
+        WARNING_MESSAGE
+        QUESTION_MESSAGE
+        PLAIN_MESSAGE 
+        */
+        
+        if (result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = fileChooser.getSelectedFile();
+            String direccionArchivo = selectedFile.getAbsolutePath();
+            Boolean b = farma.cargarArticulos(direccionArchivo);
+            
+            if (b){
+                JOptionPane.showMessageDialog(null, "Archivo cargado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jmCargarArticulosActionPerformed
+
+    private void jmCargarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCargarStockActionPerformed
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = fileChooser.getSelectedFile();
+            String direccionArchivo = selectedFile.getAbsolutePath();
+            Boolean b = farma.cargarStock(direccionArchivo);
+            
+            if (b){
+                JOptionPane.showMessageDialog(null, "Archivo cargado correctamente", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jmCargarStockActionPerformed
+
+    private void jmNuevoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNuevoArticuloActionPerformed
+
+        
+        NuevoArticulo a = new NuevoArticulo();
+        a.show();
+    }//GEN-LAST:event_jmNuevoArticuloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,25 +236,25 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenu jmAcercaDe;
+    private javax.swing.JMenu jmArticulos;
+    private javax.swing.JMenu jmBuscarArticulo;
+    private javax.swing.JMenuItem jmBuscarArticuloXCantidad;
+    private javax.swing.JMenuItem jmBusquedaGenerica;
+    private javax.swing.JMenu jmCargaDeArchivo;
+    private javax.swing.JMenuItem jmCargarArticulos;
+    private javax.swing.JMenuItem jmCargarStock;
+    private javax.swing.JMenuItem jmDevolverVenta;
+    private javax.swing.JMenuItem jmEliminarArticulo;
+    private javax.swing.JMenuItem jmListarTodasVentas;
+    private javax.swing.JMenuItem jmListarTodosArticulos;
+    private javax.swing.JMenu jmMovimientos;
+    private javax.swing.JMenuItem jmNuevaVenta;
+    private javax.swing.JMenuItem jmNuevoArticulo;
+    private javax.swing.JMenu jmReportes;
+    private javax.swing.JMenuItem jmReportesGenericos;
+    private javax.swing.JMenuItem jmReportesPorFecha;
     // End of variables declaration//GEN-END:variables
 
 }

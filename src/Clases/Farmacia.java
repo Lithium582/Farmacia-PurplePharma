@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package Clases;
+import FarmaciaPurplePharma.Principal;
 import Interfaces.*;
 import java.util.*;
 import java.text.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -131,7 +133,8 @@ public class Farmacia implements IFarmacia {
         }
         
         if (cantErroneos > 0){
-            System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
+            //System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
+            JOptionPane.showMessageDialog(null, "Se han omitido " + cantErroneos + " registros incorrectos", "Atención", JOptionPane.WARNING_MESSAGE);
         }
         
         if (elementos.length == 0){
@@ -184,7 +187,8 @@ public class Farmacia implements IFarmacia {
         }
         
         if (cantErroneos > 0){
-            System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
+            //System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
+            JOptionPane.showMessageDialog(null, "Se han omitido " + cantErroneos + " registros incorrectos", "Atención", JOptionPane.WARNING_MESSAGE);
         }
         
         if (elementos.length == 0){
