@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import java.util.Calendar;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,64 +14,47 @@ import static org.junit.Assert.*;
  * @author Lithium582
  */
 public class FarmaciaTest {
+    Farmacia objFarmacia;
     
     public FarmaciaTest() {
-    }
-
-    @Test
-    public void testGetDireccion() {
-    }
-
-    @Test
-    public void testSetDireccion() {
-    }
-
-    @Test
-    public void testGetTelefono() {
-    }
-
-    @Test
-    public void testSetTelefono() {
-    }
-
-    @Test
-    public void testGetNombre() {
-    }
-
-    @Test
-    public void testGetArticulos() {
-    }
-
-    @Test
-    public void testGetVentas() {
+        objFarmacia = new Farmacia("Farmacia Test","Av Sr. Tester Yei Unit","12345");
+        objFarmacia.cargarArticulos("farmacia_articles_tests.csv");
+        objFarmacia.cargarStock("farmacia_stock_tests.csv");
     }
 
     @Test
     public void testCargarArticulos() {
+        //assertTrue("Carga Artículos",objFarmacia.cargarArticulos("farmacia_articles_tests.csv"));
     }
 
     @Test
     public void testCargarStock() {
+        assertTrue("Carga Stock",objFarmacia.cargarStock("farmacia_stock_tests.csv"));
     }
 
     @Test
     public void testBuscarXID() {
+        assertEquals("BuscarXID","100002",objFarmacia.BuscarArticuloXID(100002, new String[1]).getID().toString());
     }
 
     @Test
     public void testBuscarXDescripcion() {
+        assertEquals("BuscarXDescripcion","",objFarmacia.buscarXDescripcion(""));
     }
 
     @Test
     public void testBuscarXNombre() {
+        assertEquals("BuscarXNombre","",objFarmacia.buscarXNombre(""));
     }
 
     @Test
     public void testInsertarArticulo() {
+        assertTrue("InsertarArticulo",objFarmacia.InsertarArticulo(new Articulo(),"Area51"));
     }
 
     @Test
     public void testEliminarArticulo() {
+        //objFarmacia.EliminarArticulo();
     }
 
     @Test

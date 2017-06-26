@@ -6,35 +6,36 @@
 package Clases;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author Lithium582
  */
 public class ListaTest {
+    Lista<Articulo> objLista;
     
     public ListaTest() {
+        objLista = new Lista<Articulo>();
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),3));
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),4));
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),10));
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),12));
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),16));
     }
 
     @Test
     public void testInsertar() {
+        objLista.Insertar(new NodoLista<Articulo>(new Articulo(),3));
     }
 
     @Test
     public void testBuscar() {
+        
     }
 
     @Test
     public void testBorrar() {
-    }
-
-    @Test
-    public void testPrint_0args() {
-    }
-
-    @Test
-    public void testPrint_String() {
+        
     }
 
     @Test
