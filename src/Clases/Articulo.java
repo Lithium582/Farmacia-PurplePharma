@@ -163,6 +163,11 @@ public class Articulo implements IArticulo {
         this.stock = value;
     }
     
+    @Override
+    public Integer getAnoVencimiento() {
+        return this.anoVencimiento;
+    }
+    
     //</ editor-fold>
 
     // <editor-fold defaultstate="extended" desc="Funciones y Métodos">

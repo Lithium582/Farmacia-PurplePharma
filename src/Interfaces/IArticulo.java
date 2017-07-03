@@ -127,4 +127,10 @@ public interface IArticulo {
      */
     public void setStock(Integer value);
     
+    /**
+     * Carga un nuevo valor al stock del Articulo.
+     * @param value Valor.
+     */
+    public Integer getAnoVencimiento();
+    
 }

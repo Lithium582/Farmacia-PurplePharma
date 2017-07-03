@@ -11,6 +11,7 @@ import java.util.*;
 import Clases.*;
 import Interfaces.*;
 import java.text.*;
+import InterFazGraFica.*;
 
 /**
  *
@@ -31,6 +32,9 @@ public class FarmaciaPurplePharma {
         try{
             //Ventana v = new Ventana();
             //v.show();
+            
+//            Principal p = new Principal();
+//            p.show();
             
             Farmacia farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
             // TODO code application logic here
@@ -210,7 +214,10 @@ public class FarmaciaPurplePharma {
                         break;
                     }
                     case 4:{
-                        String retorno = farma.retornarArticulos("-");
+                        String retorno = farma.retornarArticulos("");
+//                        String hola = farma.retornarInOrden();
+//                        System.out.println(hola);
+                        //String retorno = farma.retornarArticulos();
                         if (!retorno.equals("")){
                             System.out.println(retorno);
                         }else{

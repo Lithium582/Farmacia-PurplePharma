@@ -4,9 +4,12 @@
  * and open the template in the editor.
  */
 
-package FarmaciaPurplePharma;
+package InterFazGraFica;
 
+import InterFazGraFica.NuevoArticulo;
 import Clases.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.*;
 import javax.swing.*;
 
@@ -20,9 +23,17 @@ public class Principal extends javax.swing.JFrame {
     
     /** Creates new form Principal */
     public Principal() {
-        initComponents();
-        
+        initComponents();        
         farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
+        
+        this.setSize(450,400);
+        this.lblFondo.setSize(400,350);
+        
+        this.setResizable(false);
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2,
+                dim.height / 2 - this.getSize().height / 2);
     }
 
     /** This method is called from within the constructor to
@@ -34,6 +45,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmCargaDeArchivo = new javax.swing.JMenu();
         jmCargarArticulos = new javax.swing.JMenuItem();
@@ -44,7 +56,9 @@ public class Principal extends javax.swing.JFrame {
         jmBuscarArticulo = new javax.swing.JMenu();
         jmBuscarArticuloXCantidad = new javax.swing.JMenuItem();
         jmBusquedaGenerica = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         jmEliminarArticulo = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jmMovimientos = new javax.swing.JMenu();
         jmNuevaVenta = new javax.swing.JMenuItem();
         jmDevolverVenta = new javax.swing.JMenuItem();
@@ -57,6 +71,8 @@ public class Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PurplePharma Principal");
         setBackground(new java.awt.Color(0, 0, 0));
+
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondo.png"))); // NOI18N
 
         jmCargaDeArchivo.setText("Carga de Archivos");
 
@@ -89,20 +105,52 @@ public class Principal extends javax.swing.JFrame {
         jmArticulos.add(jmNuevoArticulo);
 
         jmListarTodosArticulos.setText("Listar Todos");
+        jmListarTodosArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmListarTodosArticulosActionPerformed(evt);
+            }
+        });
         jmArticulos.add(jmListarTodosArticulos);
 
         jmBuscarArticulo.setText("Buscar");
 
         jmBuscarArticuloXCantidad.setText("Cantidad de Artículos");
+        jmBuscarArticuloXCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmBuscarArticuloXCantidadActionPerformed(evt);
+            }
+        });
         jmBuscarArticulo.add(jmBuscarArticuloXCantidad);
 
         jmBusquedaGenerica.setText("Búsqueda Genérica");
+        jmBusquedaGenerica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmBusquedaGenericaActionPerformed(evt);
+            }
+        });
         jmBuscarArticulo.add(jmBusquedaGenerica);
 
         jmArticulos.add(jmBuscarArticulo);
 
-        jmEliminarArticulo.setText("Eliminar");
-        jmArticulos.add(jmEliminarArticulo);
+        jMenu1.setText("Eliminar");
+
+        jmEliminarArticulo.setText("Eliminar Artículo");
+        jmEliminarArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmEliminarArticuloActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmEliminarArticulo);
+
+        jMenuItem1.setText("Eliminar Área");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jmArticulos.add(jMenu1);
 
         jMenuBar1.add(jmArticulos);
 
@@ -138,11 +186,17 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -154,7 +208,7 @@ public class Principal extends javax.swing.JFrame {
         //this.dispose();
         
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(this);
         
         /*
@@ -179,7 +233,7 @@ public class Principal extends javax.swing.JFrame {
     private void jmCargarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmCargarStockActionPerformed
         
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
         int result = fileChooser.showOpenDialog(this);
         
         if (result == JFileChooser.APPROVE_OPTION){
@@ -196,9 +250,53 @@ public class Principal extends javax.swing.JFrame {
     private void jmNuevoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNuevoArticuloActionPerformed
 
         
-        NuevoArticulo a = new NuevoArticulo();
+        NuevoArticulo a = new NuevoArticulo(farma);
         a.show();
     }//GEN-LAST:event_jmNuevoArticuloActionPerformed
+
+    private void jmEliminarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEliminarArticuloActionPerformed
+        try{
+            String idProductoEliminar = JOptionPane.showInputDialog(this,"Ingrese el ID del artículo a eliminar", "Eliminar un artículo",JOptionPane.INFORMATION_MESSAGE);
+            
+            if (idProductoEliminar != null){
+                Integer idProductoINT = Integer.parseInt(idProductoEliminar);
+                if(farma.EliminarArticulo(idProductoINT)){
+                    JOptionPane.showMessageDialog(this,"Artículo eliminado con éxito","Información",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,"Ha habido un error al eliminar el artículo","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jmEliminarArticuloActionPerformed
+
+    private void jmListarTodosArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmListarTodosArticulosActionPerformed
+        frmListarArticulos fLArticulos = new frmListarArticulos(farma);
+        fLArticulos.show();
+    }//GEN-LAST:event_jmListarTodosArticulosActionPerformed
+
+    private void jmBuscarArticuloXCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmBuscarArticuloXCantidadActionPerformed
+        Integer iCant = farma.CantidadDeArticulos();
+        JOptionPane.showMessageDialog(this,"La farmacia cuenta con " + iCant.toString() + " artículos diferentes","Información",JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jmBuscarArticuloXCantidadActionPerformed
+
+    private void jmBusquedaGenericaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmBusquedaGenericaActionPerformed
+        frmBuscarArticulos formBuscar = new frmBuscarArticulos(farma);
+        formBuscar.show();
+    }//GEN-LAST:event_jmBusquedaGenericaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+         try{
+            String strAreaEliminar = JOptionPane.showInputDialog(this,"Ingrese el área a eliminar", "Eliminar un área",JOptionPane.INFORMATION_MESSAGE);
+            
+            if (strAreaEliminar != null){
+                if(farma.EliminarArea(strAreaEliminar)){
+                    JOptionPane.showMessageDialog(this,"Área eliminada con éxito","Información",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,"Ha habido un error al eliminar el artículo","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,7 +334,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jmAcercaDe;
     private javax.swing.JMenu jmArticulos;
     private javax.swing.JMenu jmBuscarArticulo;
@@ -255,6 +355,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jmReportes;
     private javax.swing.JMenuItem jmReportesGenericos;
     private javax.swing.JMenuItem jmReportesPorFecha;
+    private javax.swing.JLabel lblFondo;
     // End of variables declaration//GEN-END:variables
 
 }

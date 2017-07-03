@@ -30,7 +30,7 @@ public class ManejadorArchivosGenerico {
 		}
 	}
 
-	public static String[] leerArchivo(String nombreCompletoArchivo) {
+	public static ArrayList<String> leerArchivo(String nombreCompletoArchivo) {
 		FileInputStream fr;
 		ArrayList<String> listaLineasArchivo = new ArrayList<String>();
 		try {
@@ -51,6 +51,6 @@ public class ManejadorArchivosGenerico {
 		}
 		//System.out.println("Archivo leido satisfactoriamente");
 
-		return listaLineasArchivo.toArray(new String[0]);
+		return listaLineasArchivo;
 	}
 }

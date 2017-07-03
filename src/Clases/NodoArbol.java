@@ -168,7 +168,6 @@ public class NodoArbol<T> implements INodoArbol<T> {
             }
             
             f.setAccessible(true);
-            //System.out.print(f.getType());
 
             String val = f.get(this.datos).toString();
 

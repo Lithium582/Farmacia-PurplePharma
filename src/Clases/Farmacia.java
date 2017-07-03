@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Clases;
-import FarmaciaPurplePharma.Principal;
 import Interfaces.*;
 import java.util.*;
 import java.text.*;
@@ -101,10 +100,14 @@ public class Farmacia implements IFarmacia {
     @Override
     public Boolean cargarArticulos(String rutaArchivo) {
         Integer cantErroneos = 0;
-        String[] elementos = ManejadorArchivosGenerico.leerArchivo(rutaArchivo);
+        Integer cantVencidos = 0;
         
-        for (int i = 1; i < elementos.length; i++){
-            String[] linea = elementos[i].split(";");
+        ArrayList<String> elementos = ManejadorArchivosGenerico.leerArchivo(rutaArchivo);
+        elementos.remove(0);
+        Collections.shuffle(elementos);
+        
+        for (int i = 1; i < elementos.size(); i++){
+            String[] linea = elementos.get(i).split(";");
             
             if (linea.length == 11){
                 try{
@@ -121,8 +124,12 @@ public class Farmacia implements IFarmacia {
                     String areaAplicacion = RemoverCaracteres(linea[10].trim()).toUpperCase();
 
                     IArticulo a = new Articulo(id,fecha_Creacion,fecha_Actualizacion,precio,nombre,descripcion,anoVencimiento,estado,refrigerado,receta);
-
-                    this.InsertarArticulo(a,areaAplicacion);
+                    
+                    if (anoVencimiento < new GregorianCalendar().get(Calendar.YEAR)){
+                        cantVencidos++;
+                    }else{
+                        this.InsertarArticulo(a,areaAplicacion);
+                    }
                 }
                 catch(Exception ex){
                     cantErroneos++;
@@ -136,8 +143,12 @@ public class Farmacia implements IFarmacia {
             //System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
             JOptionPane.showMessageDialog(null, "Se han omitido " + cantErroneos + " registros incorrectos", "Atención", JOptionPane.WARNING_MESSAGE);
         }
+        if (cantVencidos > 0){
+            //System.out.println("Se han omitido " + cantErroneos + " registros incorrectos");
+            JOptionPane.showMessageDialog(null, "Se han omitido " + cantVencidos + " artículos vencidos", "Atención", JOptionPane.WARNING_MESSAGE);
+        }
         
-        if (elementos.length == 0){
+        if (elementos.size() == 0){
             return false;
         }
         
@@ -147,10 +158,10 @@ public class Farmacia implements IFarmacia {
     @Override
     public Boolean cargarStock(String rutaArchivo) {
         Integer cantErroneos = 0;
-        String[] elementos = ManejadorArchivosGenerico.leerArchivo(rutaArchivo);
+        ArrayList<String> elementos = ManejadorArchivosGenerico.leerArchivo(rutaArchivo);
         
-        for (int i = 1; i < elementos.length; i++){
-            String[] linea = elementos[i].split(";");
+        for (int i = 1; i < elementos.size(); i++){
+            String[] linea = elementos.get(i).split(";");
             
             if (linea.length == 2){
                 Integer idArticulo = Integer.parseInt(linea[0].trim());
@@ -191,7 +202,7 @@ public class Farmacia implements IFarmacia {
             JOptionPane.showMessageDialog(null, "Se han omitido " + cantErroneos + " registros incorrectos", "Atención", JOptionPane.WARNING_MESSAGE);
         }
         
-        if (elementos.length == 0){
+        if (elementos.size() == 0){
             return false;
         }
         
@@ -471,12 +482,13 @@ public class Farmacia implements IFarmacia {
     @Override
     public String retornarArticulos(String pSeparador) {
         String strRetorno = "";
+        ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+        
         
         if (listaArticulos.esVacia()) {
-            return "Lista aún no inicializado";
+            return null;
         }
         else {
-            ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
             INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
             
             while(nodoActual != null){
@@ -484,6 +496,64 @@ public class Farmacia implements IFarmacia {
                 nodoActual.getObjeto().buscarXAtributo("nombre", "", listaRetorno);
                 strRetorno += nodoActual.getEtiqueta().toString() + "\n";
                 strRetorno += listaRetorno.Print("-");
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return strRetorno;
+        }
+    }
+    
+    public ArrayList retornarArticulos(Integer pInt) {
+        ArrayList ArrayRetorno = new ArrayList();
+        
+        if (listaArticulos.esVacia()) {
+            return null;
+        }
+        else {
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            String nomArea = "";
+            Integer i = 0;
+             
+            while(nodoActual != null){
+                ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+                nodoActual.getObjeto().buscarXAtributo("nombre", "", listaRetorno);
+                nomArea = nodoActual.getEtiqueta().toString();
+                //strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+                //strRetorno += listaRetorno.Print("-");
+                
+                if(listaRetorno != null){
+                    INodoLista<IArticulo> subNodoActual = listaRetorno.getPrimero();
+                    
+                    while(subNodoActual != null){
+                        IArticulo art = subNodoActual.getObjeto();
+                        ArrayRetorno.add(i, art);
+                        ArrayRetorno.add(i + 1, nomArea);
+                        
+                        i +=2;
+                        subNodoActual = subNodoActual.getSiguiente();
+                    }
+                    
+                }
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return ArrayRetorno;
+        }
+    }
+    
+    public String retornarInOrden() {
+        String strRetorno = "";
+        
+        if (listaArticulos.esVacia()) {
+            return "Lista aún no inicializado";
+        }
+        else {
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                
+                strRetorno += nodoActual.getObjeto().inOrden();
                 
                 nodoActual = nodoActual.getSiguiente();
             }
@@ -514,6 +584,31 @@ public class Farmacia implements IFarmacia {
             }
             
             return strRetorno;
+        }
+    }
+    
+    public ILista<IArticulo> listarArticulosXArea(String pArea,String pp) {
+        //String strRetorno = "";
+        ILista<IArticulo> listaRetorno = new Lista<IArticulo>();
+        
+        if (listaArticulos.esVacia()) {
+            return null;
+        }
+        else {
+            
+            INodoLista<IArbol<IArticulo>> nodoActual = listaArticulos.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+//                    strRetorno += nodoActual.getEtiqueta().toString() + "\n";
+//                    strRetorno += listaRetorno.Print("-");
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
         }
     }
     
