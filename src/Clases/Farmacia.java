@@ -666,6 +666,48 @@ public class Farmacia implements IFarmacia {
         }
     }
     
+    public ILista<IMovimiento> listarVentasXArea(String pArea, Integer p) {
+        ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+        
+        if (listaVentas.esVacia()) {
+            return null;
+        }
+        else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+        }
+    }
+    
+    public ILista<IMovimiento> listarComprasXArea(String pArea,Integer p) {
+        ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+        
+        if (listaCompras.esVacia()) {
+            return null;
+        }
+        else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaCompras.getPrimero();
+            
+            while(nodoActual != null){
+                if (nodoActual.getEtiqueta().toString().toLowerCase().equals(pArea.toLowerCase())){
+                    nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                }
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+        }
+    }
+    
     @Override
     public String retornarVentas() {
         return listaVentas.Print();
@@ -679,6 +721,29 @@ public class Farmacia implements IFarmacia {
         
         return "Lista aún no inicializado";
     }
+    
+    public ILista<IMovimiento> retornarVentas(Integer pInt) {
+        ILista<IMovimiento> listaRetorno = new Lista<IMovimiento>();
+        
+        if (listaArticulos.esVacia()) {
+            return null;
+        }
+        else {
+            INodoLista<IArbol<IMovimiento>> nodoActual = listaVentas.getPrimero();
+            String nomArea = "";
+            Integer i = 0;
+             
+            while(nodoActual != null){
+                listaRetorno = new Lista<IMovimiento>();
+                nodoActual.getObjeto().buscarXAtributo("id", "", listaRetorno);
+                
+                nodoActual = nodoActual.getSiguiente();
+            }
+            
+            return listaRetorno;
+        }
+    }
+    
     
     @Override
     public Double promedioVentasXArticulo(Integer pIdArticulo){

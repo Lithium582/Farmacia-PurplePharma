@@ -33,8 +33,8 @@ public class FarmaciaPurplePharma {
             //Ventana v = new Ventana();
             //v.show();
             
-//            Principal p = new Principal();
-//            p.show();
+            Principal p = new Principal();
+            p.show();
             
             Farmacia farma = new Farmacia("UCUPharma","Avenida SiempreViva 582","666-333-666");
             // TODO code application logic here

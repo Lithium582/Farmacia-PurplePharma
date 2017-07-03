@@ -66,7 +66,9 @@ public class Principal extends javax.swing.JFrame {
         jmListarTodasVentas = new javax.swing.JMenuItem();
         jmReportesPorFecha = new javax.swing.JMenuItem();
         jmReportesGenericos = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jmAcercaDe = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PurplePharma Principal");
@@ -157,27 +159,69 @@ public class Principal extends javax.swing.JFrame {
         jmMovimientos.setText("Movimientos");
 
         jmNuevaVenta.setText("Nueva Venta");
+        jmNuevaVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmNuevaVentaActionPerformed(evt);
+            }
+        });
         jmMovimientos.add(jmNuevaVenta);
 
         jmDevolverVenta.setText("Devolver Venta");
+        jmDevolverVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmDevolverVentaActionPerformed(evt);
+            }
+        });
         jmMovimientos.add(jmDevolverVenta);
 
         jmReportes.setText("Reportes");
 
         jmListarTodasVentas.setText("Listar Todas");
+        jmListarTodasVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmListarTodasVentasActionPerformed(evt);
+            }
+        });
         jmReportes.add(jmListarTodasVentas);
 
         jmReportesPorFecha.setText("Reportes por Fecha");
+        jmReportesPorFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmReportesPorFechaActionPerformed(evt);
+            }
+        });
         jmReportes.add(jmReportesPorFecha);
 
         jmReportesGenericos.setText("Reportes Genéricos");
+        jmReportesGenericos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmReportesGenericosActionPerformed(evt);
+            }
+        });
         jmReportes.add(jmReportesGenericos);
+
+        jMenuItem2.setText("Movimientos Por Área");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jmReportes.add(jMenuItem2);
 
         jmMovimientos.add(jmReportes);
 
         jMenuBar1.add(jmMovimientos);
 
         jmAcercaDe.setText("Acerca De");
+
+        jMenuItem3.setText("Acerca DE...");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jmAcercaDe.add(jMenuItem3);
+
         jMenuBar1.add(jmAcercaDe);
 
         setJMenuBar(jMenuBar1);
@@ -256,7 +300,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmEliminarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmEliminarArticuloActionPerformed
         try{
-            String idProductoEliminar = JOptionPane.showInputDialog(this,"Ingrese el ID del artículo a eliminar", "Eliminar un artículo",JOptionPane.INFORMATION_MESSAGE);
+            String idProductoEliminar = JOptionPane.showInputDialog(this,"Ingrese el ID del artículo a eliminar",
+                    "Eliminar un artículo",JOptionPane.INFORMATION_MESSAGE);
             
             if (idProductoEliminar != null){
                 Integer idProductoINT = Integer.parseInt(idProductoEliminar);
@@ -298,6 +343,52 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jmDevolverVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmDevolverVentaActionPerformed
+        try{
+            String idVentaBuscar = JOptionPane.showInputDialog(this,"Ingrese el ID de la venta a devolver",
+                    "Retornar una venta",JOptionPane.INFORMATION_MESSAGE);
+            
+            if (idVentaBuscar != null){
+                Long idVentaLong = Long.parseLong(idVentaBuscar);
+                if(farma.ReintegroVenta(idVentaLong)){
+                    JOptionPane.showMessageDialog(this,"Venta reintegrada con éxito","Información",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this,"Ha habido un error al retornar la venta","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jmDevolverVentaActionPerformed
+
+    private void jmNuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmNuevaVentaActionPerformed
+        frmNuevaVenta nuevaVentaForm = new frmNuevaVenta(farma);
+        nuevaVentaForm.show();
+    }//GEN-LAST:event_jmNuevaVentaActionPerformed
+
+    private void jmListarTodasVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmListarTodasVentasActionPerformed
+    frmListarVentas listarVentaForm = new frmListarVentas(farma);
+        listarVentaForm.show();
+    }//GEN-LAST:event_jmListarTodasVentasActionPerformed
+
+    private void jmReportesPorFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmReportesPorFechaActionPerformed
+        frmListarVentasXFecha formXFecha = new frmListarVentasXFecha(this.farma);
+        formXFecha.show();
+    }//GEN-LAST:event_jmReportesPorFechaActionPerformed
+
+    private void jmReportesGenericosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmReportesGenericosActionPerformed
+        frmBuscarVentas formBuscarVentas = new frmBuscarVentas(this.farma);
+        formBuscarVentas.show();
+    }//GEN-LAST:event_jmReportesGenericosActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        frmMovimientosXArea formMovimientos = new frmMovimientosXArea(farma);
+        formMovimientos.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        frmAcercaDe formA = new frmAcercaDe(farma);
+        formA.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -337,6 +428,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenu jmAcercaDe;
     private javax.swing.JMenu jmArticulos;
     private javax.swing.JMenu jmBuscarArticulo;

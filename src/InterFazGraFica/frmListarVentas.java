@@ -10,9 +10,6 @@ import Interfaces.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,17 +18,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lithium582
  */
-public class frmListarArticulos extends javax.swing.JFrame {
+public class frmListarVentas extends javax.swing.JFrame {
 
     private final Farmacia farmaArticulos;
     /**
      * Creates new form ListarArticulos
      */
     
-    public frmListarArticulos() {
+    public frmListarVentas() {
         initComponents();
         farmaArticulos = null;
-        this.setSize(900,400);
+        this.setSize(400,400);
         this.setResizable(false);
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -40,82 +37,48 @@ public class frmListarArticulos extends javax.swing.JFrame {
         
     }
     
-    public frmListarArticulos(Farmacia pFarma) {
+    public frmListarVentas(Farmacia pFarma) {
         initComponents();
         
-        this.dgArticulos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        this.dgVentas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         
         farmaArticulos = pFarma;
         
-        this.setSize(900,400);
+        this.setSize(400,400);
         this.setResizable(false);
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2,
                 dim.height / 2 - this.getSize().height / 2);
         
-        this.dgArticulos.setRowSelectionAllowed(true);
-        this.dgArticulos.setRowSelectionAllowed(true);
-        DefaultTableModel elementTable = (DefaultTableModel) this.dgArticulos.getModel();
+        this.dgVentas.setRowSelectionAllowed(true);
+        this.dgVentas.setRowSelectionAllowed(true);
+        DefaultTableModel elementTable = (DefaultTableModel) this.dgVentas.getModel();
         
 //        ILista<IArticulo> listaArticulos = new Lista<IArticulo>();
 //        listaArticulos = farmaArticulos.retornarArticulos("");
         
 
-        ArrayList lista = farmaArticulos.retornarArticulos(0);
+        ILista<IMovimiento> lista = farmaArticulos.retornarVentas(0);
 
         if (lista != null){
-            //INodoLista<IArticulo> nodoActual = listaArticulos.getPrimero();
+            INodoLista<IMovimiento> nodoActual = lista.getPrimero();
             
-        for (int i = 0; i < lista.size(); i+=2){
-            IArticulo articuloActual = (Articulo)lista.get(i);
-            String area = lista.get(i+1).toString();
-            
-                if (articuloActual != null){
+        while (nodoActual != null){
+            IMovimiento ventaActual = nodoActual.getObjeto();
+                if (ventaActual != null){
                     String[] prodInfo = new String[12];
-                    prodInfo[0] = area;
-                    prodInfo[1] = articuloActual.getID().toString();
-                    prodInfo[2] = articuloActual.getNombre();
-                    prodInfo[3] = articuloActual.getDescripcion();
-                    prodInfo[4] = Double.toString(articuloActual.getPrecio());
-                    prodInfo[5] = articuloActual.getFechaCreacion().toString();
-                    prodInfo[6] = articuloActual.getFechaActualizacion().toString();
-                    prodInfo[7] = Integer.toString(articuloActual.getStock());
-                    prodInfo[8] = Integer.toString(articuloActual.getAnoVencimiento());
-                    prodInfo[9] = Boolean.toString(articuloActual.getRefrigerado());
-                    prodInfo[10] = Boolean.toString(articuloActual.getReceta());
-                    prodInfo[11] = Boolean.toString(articuloActual.getEstado());
-
+                    prodInfo[0] = (ventaActual.getID()).toString();
+                    prodInfo[1] = ventaActual.GetFecha().toString();
+                    prodInfo[2] = (ventaActual.GetIdArticulo()).toString();
+                    prodInfo[3] = Double.toString(ventaActual.GetValorFinal());
+                    prodInfo[4] = Integer.toString(ventaActual.GetCantidad());
+                    
                     elementTable.addRow(prodInfo);
                 }
-            //nodoActual = nodoActual.getSiguiente();
+            nodoActual = nodoActual.getSiguiente();
         }
-            
-//        while (nodoActual != null){
-//            IArticulo articuloActual = nodoActual.getObjeto();
-//            
-//                if (articuloActual != null){
-//                    String[] prodInfo = new String[12];
-//                    prodInfo[0] = 
-//                    prodInfo[0] = articuloActual.getID().toString();
-//                    prodInfo[1] = articuloActual.getNombre();
-//                    prodInfo[2] = articuloActual.getDescripcion();
-//                    prodInfo[3] = Double.toString(articuloActual.getPrecio());
-//                    prodInfo[4] = articuloActual.getFechaCreacion().toString();
-//                    prodInfo[5] = articuloActual.getFechaActualizacion().toString();
-//                    prodInfo[6] = Integer.toString(articuloActual.getStock());
-//                    prodInfo[7] = Integer.toString(articuloActual.getAnoVencimiento());
-//                    prodInfo[8] = Boolean.toString(articuloActual.getRefrigerado());
-//                    prodInfo[9] = Boolean.toString(articuloActual.getReceta());
-//                    prodInfo[10] = Boolean.toString(articuloActual.getEstado());
-//
-//                    elementTable.addRow(prodInfo);
-//                }
-//            nodoActual = nodoActual.getSiguiente();
-//            }
-        }else{
-            JOptionPane.showMessageDialog(null, "El stock de productos se encuentra vacío", "Atención", JOptionPane.WARNING_MESSAGE);
-        }
+    }
     }
 
     /**
@@ -129,10 +92,10 @@ public class frmListarArticulos extends javax.swing.JFrame {
 
         btnCerrarForm = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        dgArticulos = new javax.swing.JTable();
+        dgVentas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listar Artículo");
+        setTitle("Listar Ventas");
 
         btnCerrarForm.setText("Cerrar");
         btnCerrarForm.addActionListener(new java.awt.event.ActionListener() {
@@ -141,14 +104,14 @@ public class frmListarArticulos extends javax.swing.JFrame {
             }
         });
 
-        dgArticulos.setModel(new javax.swing.table.DefaultTableModel(
+        dgVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
             },
             new String [] {
-                "Área","ID","Nombre","Descripción","Precio","Fecha_Creacion","Fecha_Actualizacion", "Stock", "Año de Vencimiento", "Refrigerado", "Receta", "Estado"
+                "ID","Fecha","ID Articulo","Valor Final","Cantidad"
             }
         ));
-        jScrollPane2.setViewportView(dgArticulos);
+        jScrollPane2.setViewportView(dgVentas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,28 +160,30 @@ public class frmListarArticulos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmListarArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmListarArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmListarArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmListarArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmListarVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmListarArticulos().setVisible(true);
+                new frmListarVentas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarForm;
-    private javax.swing.JTable dgArticulos;
+    private javax.swing.JTable dgVentas;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
